@@ -135,3 +135,73 @@ body.dark-mode .character-img {
         font-size: 2rem;
     }
 }
+
+/* 제휴 문의 섹션 스타일 */
+.contact-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--secondary-text);
+    text-align: left;
+}
+
+.contact-section h2 {
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.contact-section p {
+    text-align: center;
+    color: var(--secondary-text);
+    margin-bottom: 30px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    border-color: #444;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--accent-color);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
