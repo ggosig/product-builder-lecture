@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #2196F3;
+    --bg-color: #8d6e63;
     --container-bg: #fff;
     --card-bg: #ffffff;
     --text-color: #4a3728;
@@ -20,7 +20,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #2196F3;
+    background-color: #8d6e63;
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
     display: flex;
