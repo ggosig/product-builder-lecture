@@ -8,6 +8,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5569326731374408"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
 </head>
 <body>
     <div class="container">
@@ -18,13 +19,64 @@
             <h1>명리공간 (明理空間)</h1>
             <p class="subtitle">정통 명리학의 원리로 풀어내는 당신의 삶과 운명</p>
             <nav class="site-nav">
+                <a href="#analysis">즉석 사주풀이</a>
                 <a href="#services">주요 서비스</a>
                 <a href="#about">사이트 소개</a>
-                <a href="#contact">상담 문의</a>
             </nav>
         </header>
 
         <main>
+            <section id="analysis" class="analysis-section">
+                <div class="analysis-card">
+                    <h2>2026년 운세 & 정통 사주풀이</h2>
+                    <p>생년월일시를 입력하시면 당신의 타고난 운명과 2026년의 흐름을 분석해 드립니다.</p>
+                    <div class="saju-inputs">
+                        <div class="input-row">
+                            <input type="text" id="saju-name" placeholder="이름 (예: 홍길동)" required>
+                            <select id="saju-gender">
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        <div class="input-row">
+                            <input type="date" id="saju-birth-date" required>
+                            <input type="time" id="saju-birth-time" required>
+                        </div>
+                        <button id="analyze-btn" class="analyze-btn">운명 분석하기</button>
+                    </div>
+                </div>
+
+                <div id="analysis-result" class="analysis-result hidden">
+                    <div class="result-header">
+                        <h3><span id="res-name"></span>님의 사주 분석 결과</h3>
+                    </div>
+                    <div class="saju-table">
+                        <div class="saju-column">
+                            <div class="saju-label">시(時)</div>
+                            <div class="saju-kanji" id="saju-hour">?</div>
+                        </div>
+                        <div class="saju-column">
+                            <div class="saju-label">일(日)</div>
+                            <div class="saju-kanji" id="saju-day">?</div>
+                        </div>
+                        <div class="saju-column">
+                            <div class="saju-label">월(月)</div>
+                            <div class="saju-kanji" id="saju-month">?</div>
+                        </div>
+                        <div class="saju-column">
+                            <div class="saju-label">연(年)</div>
+                            <div class="saju-kanji" id="saju-year">?</div>
+                        </div>
+                    </div>
+                    <div class="result-text">
+                        <h4>종합 분석</h4>
+                        <p id="res-general"></p>
+                        <h4>2026년(병오년) 신년 운세</h4>
+                        <p id="res-2026"></p>
+                    </div>
+                </div>
+            </section>
+
             <section id="services">
                 <div class="character-grid">
                     <!-- 정통 사주 분석 -->
