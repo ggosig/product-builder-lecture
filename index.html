@@ -3,38 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026년 정통 사주풀이 - 명리연구소</title>
+    <title>2026년 정통 사주풀이 - 무료 운세 및 명리학 분석 서비스</title>
+    <meta name="description" content="2026년 병오년 정통 사주풀이 서비스를 제공합니다. 생년월일시 기반 오행 분석, 오늘의 운세, 궁합 등 깊이 있는 명리학 데이터를 무료로 확인하세요.">
+    <meta name="keywords" content="사주, 사주풀이, 2026년운세, 병오년운세, 무료사주, 오늘의운세, 오행분석, 궁합">
     <link rel="stylesheet" href="style.css">
+    <!-- AdSense Auto Ads Script Placeholder (User should replace with their actual ID) -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 </head>
 <body>
-    <div class="container">
-        <div class="header-top">
-            <div class="site-nav">
-                <a href="index.html" class="nav-btn">홈</a>
+    <header class="main-header">
+        <div class="container-nav">
+            <div class="logo">
+                <a href="/">명리연구소</a>
             </div>
-            <div class="theme-toggle">
+            <nav class="site-nav">
+                <a href="#analysis-section" class="nav-link">사주분석</a>
+                <a href="#knowledge-section" class="nav-link">명리학습</a>
+                <a href="#about-section" class="nav-link">연구소소개</a>
                 <button id="theme-btn">다크 모드</button>
-            </div>
+            </nav>
         </div>
-        
-        <h1>2026년 정통 사주풀이</h1>
-        <p class="subtitle">명리학을 기반으로 당신의 타고난 운명과 2026년 병오년(丙午年)의 흐름을 분석해 드립니다.</p>
+    </header>
 
-        <div class="analysis-section">
+    <main class="container">
+        <section class="hero-section">
+            <h1>2026년 정통 사주풀이</h1>
+            <p class="subtitle">명리학의 깊이를 담아 당신의 타고난 운명과 2026년 병오년(丙午年)의 흐름을 정밀하게 분석합니다.</p>
+        </section>
+
+        <!-- Ad Slot Placeholder -->
+        <div class="ad-placeholder top-ad">광고 영역</div>
+
+        <section id="analysis-section" class="analysis-section">
             <div class="analysis-card">
                 <h2>사주 정보 입력</h2>
+                <p class="info-text">정확한 분석을 위해 정확한 생년월일과 태어난 시간을 입력해 주세요.</p>
                 <div class="saju-inputs">
                     <div class="input-row">
-                        <select id="saju-gender">
+                        <select id="saju-gender" aria-label="성별 선택">
                             <option value="male">남성</option>
                             <option value="female">여성</option>
                         </select>
-                        <input type="date" id="saju-birth-date" required>
+                        <input type="date" id="saju-birth-date" required aria-label="생년월일 선택">
                     </div>
                     <div class="input-row">
-                        <input type="time" id="saju-birth-time" required style="width: 100%;">
+                        <input type="time" id="saju-birth-time" required style="width: 100%;" aria-label="태어난 시간 선택">
                     </div>
-                    <button id="analyze-btn" class="analyze-btn">운세 분석하기</button>
+                    <button id="analyze-btn" class="analyze-btn">무료 운세 분석하기</button>
                 </div>
             </div>
 
@@ -61,7 +76,7 @@
                 </div>
 
                 <div class="wuxing-section">
-                    <h4>오행(五행) 분포 및 상관관계</h4>
+                    <h4>오행(五行) 분포 및 상관관계</h4>
                     <div class="wuxing-flex">
                         <div class="wuxing-diagram">
                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -71,40 +86,26 @@
                                     </marker>
                                 </defs>
                                 <circle cx="100" cy="100" r="70" fill="none" stroke="#eee" stroke-width="1" stroke-dasharray="4" />
-                                
-                                <!-- Creative Cycle (+) with adjusted positions and size -->
                                 <path d="M115 35 Q145 45 155 65" stroke="#4CAF50" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
                                 <text x="148" y="45" fill="#4CAF50" font-size="16" font-weight="bold">+</text>
-                                
                                 <path d="M166 93 Q165 125 148 143" stroke="#F44336" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
                                 <text x="175" y="125" fill="#F44336" font-size="16" font-weight="bold">+</text>
-                                
                                 <path d="M128 163 Q100 170 72 163" stroke="#FFC107" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
                                 <text x="100" y="190" fill="#FFC107" font-size="16" font-weight="bold">+</text>
-                                
                                 <path d="M52 143 Q35 125 34 93" stroke="#9E9E9E" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
                                 <text x="15" y="125" fill="#9E9E9E" font-size="16" font-weight="bold">+</text>
-                                
                                 <path d="M45 65 Q55 45 85 35" stroke="#2196F3" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
                                 <text x="45" y="45" fill="#2196F3" font-size="16" font-weight="bold">+</text>
-
-                                <!-- Destructive Cycle (-) with adjusted positions and size -->
                                 <path d="M108 43 L135 142" stroke="#4CAF50" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
                                 <text x="128" y="85" fill="#4CAF50" font-size="14" font-weight="bold" opacity="0.8">-</text>
-                                
                                 <path d="M130 150 L48 85" stroke="#FFC107" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
                                 <text x="85" y="120" fill="#FFC107" font-size="14" font-weight="bold" opacity="0.8">-</text>
-                                
                                 <path d="M48 78 L152 78" stroke="#2196F3" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
                                 <text x="100" y="70" fill="#2196F3" font-size="14" font-weight="bold" opacity="0.8">-</text>
-                                
                                 <path d="M155 85 L70 150" stroke="#F44336" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
                                 <text x="115" y="120" fill="#F44336" font-size="14" font-weight="bold" opacity="0.8">-</text>
-                                
                                 <path d="M65 142 L92 43" stroke="#9E9E9E" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
                                 <text x="70" y="85" fill="#9E9E9E" font-size="14" font-weight="bold" opacity="0.8">-</text>
-
-                                <!-- Elements Nodes -->
                                 <circle cx="100" cy="30" r="15" fill="var(--wood-color)" />
                                 <text x="100" y="35" text-anchor="middle" fill="white" font-size="10" font-weight="bold">木</text>
                                 <circle cx="166" cy="78" r="15" fill="var(--fire-color)" />
@@ -158,25 +159,72 @@
                     <p id="res-wealth"></p>
                 </div>
 
-                <div class="daily-fortune-section" style="margin-top: 50px; padding: 30px; background-color: rgba(166, 124, 82, 0.1); border-radius: 15px; border-left: 5px solid var(--accent-color);">
+                <div class="daily-fortune-section">
                     <h4>오늘의 맞춤 운세 & 행동 가이드</h4>
-                    <p id="today-date" style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 20px;"></p>
+                    <p id="today-date" class="date-info"></p>
                     <div class="fortune-content">
-                        <p id="res-daily-fortune" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; color: var(--accent-color);"></p>
-                        <div id="res-daily-advice" style="line-height: 1.8; white-space: pre-line;"></div>
+                        <p id="res-daily-fortune" class="fortune-title"></p>
+                        <div id="res-daily-advice" class="advice-box"></div>
                     </div>
                 </div>
 
-                <div class="compatibility-section" style="margin-top: 50px; padding-top: 30px; border-top: 2px solid var(--accent-color);">
+                <div class="compatibility-section">
                     <h4>잘 맞는 사주 BEST 5</h4>
                     <div id="compatibility-list" class="compatibility-list"></div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="disqus_thread" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--secondary-text);"></div>
+        <!-- Ad Slot Placeholder -->
+        <div class="ad-placeholder mid-ad">광고 영역</div>
+
+        <section id="knowledge-section" class="content-section">
+            <h2>명리학 기초 지식</h2>
+            <div class="article-grid">
+                <article class="article-item">
+                    <h3>사주팔자란 무엇인가?</h3>
+                    <p>사주(四柱)는 연, 월, 일, 시의 네 기둥을 의미하며, 팔자(八字)는 각 기둥에 위치한 여덟 글자를 뜻합니다. 이는 태어난 순간의 우주적 기운을 기록한 고유의 지도와 같습니다.</p>
+                </article>
+                <article class="article-item">
+                    <h3>오행(五行)의 원리</h3>
+                    <p>우주 만물을 구성하는 다섯 가지 요소인 목(木), 화(火), 토(土), 금(金), 수(水)의 상호작용을 통해 개인의 성정과 운명의 흐름을 파악하는 것이 명리학의 핵심입니다.</p>
+                </article>
+                <article class="article-item">
+                    <h3>2026년 병오년의 의미</h3>
+                    <p>병(丙)은 하늘의 태양과 같은 뜨거운 기운을, 오(午)는 땅의 활기찬 말을 의미합니다. 2026년은 그 어느 때보다 역동적이고 뜨거운 변화가 일어나는 해가 될 것입니다.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="about-section" class="content-section">
+            <h2>명리연구소 소개</h2>
+            <p>본 연구소는 정통 명리학 데이터를 기반으로 현대적인 알고리즘을 결합하여, 누구나 쉽고 정확하게 자신의 운명을 이해할 수 있도록 돕는 서비스를 제공합니다. 모든 분석 데이터는 개인 기기에만 일시적으로 사용되며, 서버에 별도로 저장되지 않아 안심하고 이용하실 수 있습니다.</p>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container-footer">
+            <p>&copy; 2026 명리연구소. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#privacy" onclick="showModal('privacy')">개인정보처리방침</a>
+                <a href="#terms" onclick="showModal('terms')">이용약관</a>
+                <a href="#disclaimer" onclick="showModal('disclaimer')">책임부인</a>
+                <a href="#contact" onclick="showModal('contact')">문의하기</a>
+            </div>
+            <p class="disclaimer-text">※ 본 서비스는 참고용이며, 중대한 결정 시에는 전문가와 상담하시기 바랍니다.</p>
+        </div>
+    </footer>
+
+    <!-- Modals for Policies -->
+    <div id="policy-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
+

@@ -229,3 +229,60 @@ function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
     const bestMatches = matches[me] || matches['목'];
     return { general, fortune2026, wealth, bestMatches, dailyFortune, dailyAdvice };
 }
+
+// Policy Modal Logic
+const modal = document.getElementById('policy-modal');
+const modalBody = document.getElementById('modal-body');
+
+const policies = {
+    privacy: `
+        <h2>개인정보처리방침</h2>
+        <p>명리연구소는 사용자의 개인정보를 중요하게 생각합니다.</p>
+        <ul>
+            <li><strong>수집 항목:</strong> 생년월일, 태어난 시간, 성별 (사주 분석 목적)</li>
+            <li><strong>수집 방법:</strong> 사용자가 웹 폼에 직접 입력</li>
+            <li><strong>보관 및 이용:</strong> 입력된 데이터는 브라우저 내에서 즉시 분석용으로만 사용되며, 서버에 저장되거나 외부로 전송되지 않습니다.</li>
+            <li><strong>쿠키 사용:</strong> 본 사이트는 테마 설정(다크 모드) 저장을 위해 로컬 스토리지를 사용하며, 광고 최적화를 위해 구글 에드센스 쿠키가 사용될 수 있습니다.</li>
+        </ul>
+    `,
+    terms: `
+        <h2>이용약관</h2>
+        <p>본 서비스를 이용함으로써 귀하는 다음 약관에 동의하게 됩니다.</p>
+        <ul>
+            <li>본 서비스는 명리학적 데이터를 기반으로 한 정보 제공을 목적으로 합니다.</li>
+            <li>제공되는 결과는 과학적 근거가 없으며, 오직 참고용으로만 활용되어야 합니다.</li>
+            <li>사용자의 잘못된 입력으로 인한 분석 오류에 대해 책임지지 않습니다.</li>
+        </ul>
+    `,
+    disclaimer: `
+        <h2>책임부인 (Disclaimer)</h2>
+        <p>명리연구소에서 제공하는 모든 분석 결과와 조언은 명리학적 해석에 기초한 것으로, 미래를 보장하거나 과학적으로 증명된 사실이 아닙니다.</p>
+        <p>사용자는 본 정보를 바탕으로 내린 결정에 대해 전적으로 책임을 지며, 본 연구소는 서비스 이용 중 발생한 어떠한 직간접적 손해에 대해서도 책임을 지지 않습니다.</p>
+    `,
+    contact: `
+        <h2>문의하기</h2>
+        <p>서비스 이용 중 불편한 점이나 제안 사항이 있으시면 아래 이메일로 연락 주시기 바랍니다.</p>
+        <p><strong>Email:</strong> support@myeongri-lab.example.com</p>
+        <p>평일 09:00 ~ 18:00 (주말 및 공휴일 제외)</p>
+    `
+};
+
+function showModal(type) {
+    if (policies[type]) {
+        modalBody.innerHTML = policies[type];
+        modal.classList.remove('hidden');
+        body.style.overflow = 'hidden';
+    }
+}
+
+function hideModal() {
+    modal.classList.add('hidden');
+    body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target == modal) {
+        hideModal();
+    }
+}
