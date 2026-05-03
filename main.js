@@ -23,15 +23,10 @@ themeBtn.addEventListener('click', () => {
 
 // Saju Analysis Logic
 document.getElementById('analyze-btn').addEventListener('click', () => {
-    const nameInput = document.getElementById('saju-name');
-    const genderInput = document.getElementById('saju-gender');
-    const dateInput = document.getElementById('saju-birth-date');
-    const timeInput = document.getElementById('saju-birth-time');
-
-    const name = nameInput.value;
-    const gender = genderInput.value;
-    const birthDate = dateInput.value;
-    const birthTime = timeInput.value;
+    const name = document.getElementById('saju-name').value;
+    const gender = document.getElementById('saju-gender').value;
+    const birthDate = document.getElementById('saju-birth-date').value;
+    const birthTime = document.getElementById('saju-birth-time').value;
 
     if (!name || !birthDate || !birthTime) {
         alert('이름, 생년월일, 시간을 모두 입력해 주세요.');
@@ -48,10 +43,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         const hour = parseInt(timeParts[0]);
         const minute = parseInt(timeParts[1]);
 
-        console.log("Input Data:", { year, month, day, hour, minute });
-
-        // Check if library exists under different namespaces
-        let SolarObj, LunarObj;
+        let SolarObj;
         if (typeof Solar !== 'undefined') {
             SolarObj = Solar;
         } else if (typeof Lunar !== 'undefined' && Lunar.Solar) {
@@ -59,23 +51,20 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         }
 
         if (!SolarObj) {
-            console.error("Lunar Library Not Found");
             alert('사주 분석 라이브러리를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
             return;
         }
 
-        // Calculation
         const solar = SolarObj.fromYmdHms(year, month, day, hour, minute, 0);
         const lunar = solar.getLunar();
         const eightChar = lunar.getEightChar();
 
-        console.log("Saju Result:", eightChar);
-
+        // Display results with correct method names
         document.getElementById('res-name').textContent = name;
         document.getElementById('saju-year').textContent = eightChar.getYear();
         document.getElementById('saju-month').textContent = eightChar.getMonth();
         document.getElementById('saju-day').textContent = eightChar.getDay();
-        document.getElementById('saju-hour').textContent = eightChar.getHour();
+        document.getElementById('saju-hour').textContent = eightChar.getTime(); // Corrected from getHour()
 
         const dayPillar = eightChar.getDay();
         const dayMaster = dayPillar.charAt(0);
@@ -90,15 +79,15 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         document.getElementById('analysis-result').scrollIntoView({ behavior: 'smooth' });
 
     } catch (e) {
-        console.error("Full Saju Error:", e);
-        alert('분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요. (에러내용: ' + e.message + ')');
+        console.error("Saju Analysis Error:", e);
+        alert('분석 중 오류가 발생했습니다. (오류 내용: ' + e.message + ')');
     }
 });
 
 function generateInterpretations(dayMaster, gender) {
     const wuxing = {
-        '甲': '목(木)', '乙': '목(木)', '丙': '화(火)', '丁': '화(火)', '戊': '토(土)',
-        '己': '토(土)', '庚': '금(金)', '辛': '금(金)', '壬': '수(水)', '癸': '수(水)'
+        '甲': '목(木)', '乙': '목(木)', '丙': '화(火)', '丁': '화(火)', '戊': '토(토)',
+        '己': '토(토)', '庚': '금(금)', '辛': '금(금)', '壬': '수(수)', '癸': '수(수)'
     };
     const element = wuxing[dayMaster] || '알 수 없음';
     
