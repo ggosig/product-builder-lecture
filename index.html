@@ -65,36 +65,66 @@
                     <div class="wuxing-flex">
                         <div class="wuxing-diagram">
                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Creative Cycle (Outer Circle) -->
-                                <circle cx="100" cy="100" r="70" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="4" />
+                                <defs>
+                                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="var(--accent-color)" />
+                                    </marker>
+                                </defs>
+                                <!-- Creative Cycle (Outer Circle) with + -->
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#eee" stroke-width="1" stroke-dasharray="4" />
                                 
+                                <!-- Wood -> Fire (+) -->
+                                <path d="M115 35 Q145 45 155 65" stroke="#4CAF50" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+                                <text x="145" y="50" fill="#4CAF50" font-size="12" font-weight="bold">+</text>
+                                
+                                <!-- Fire -> Earth (+) -->
+                                <path d="M166 93 Q165 125 148 143" stroke="#F44336" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+                                <text x="165" y="125" fill="#F44336" font-size="12" font-weight="bold">+</text>
+                                
+                                <!-- Earth -> Metal (+) -->
+                                <path d="M128 163 Q100 170 72 163" stroke="#FFC107" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+                                <text x="100" y="180" fill="#FFC107" font-size="12" font-weight="bold">+</text>
+                                
+                                <!-- Metal -> Water (+) -->
+                                <path d="M52 143 Q35 125 34 93" stroke="#9E9E9E" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+                                <text x="30" y="125" fill="#9E9E9E" font-size="12" font-weight="bold">+</text>
+                                
+                                <!-- Water -> Wood (+) -->
+                                <path d="M45 65 Q55 45 85 35" stroke="#2196F3" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+                                <text x="55" y="50" fill="#2196F3" font-size="12" font-weight="bold">+</text>
+
+                                <!-- Destructive Cycle (Inner Star) with - -->
+                                <!-- Wood -> Earth (-) -->
+                                <path d="M108 43 L135 142" stroke="#4CAF50" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
+                                <text x="125" y="90" fill="#4CAF50" font-size="10" opacity="0.8">-</text>
+                                
+                                <!-- Earth -> Water (-) -->
+                                <path d="M130 150 L48 85" stroke="#FFC107" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
+                                <text x="90" y="130" fill="#FFC107" font-size="10" opacity="0.8">-</text>
+                                
+                                <!-- Water -> Fire (-) -->
+                                <path d="M48 78 L152 78" stroke="#2196F3" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
+                                <text x="100" y="75" fill="#2196F3" font-size="10" opacity="0.8">-</text>
+                                
+                                <!-- Fire -> Metal (-) -->
+                                <path d="M155 85 L70 150" stroke="#F44336" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
+                                <text x="110" y="130" fill="#F44336" font-size="10" opacity="0.8">-</text>
+                                
+                                <!-- Metal -> Wood (-) -->
+                                <path d="M65 142 L92 43" stroke="#9E9E9E" stroke-width="1" stroke-dasharray="2" fill="none" opacity="0.5" />
+                                <text x="75" y="90" fill="#9E9E9E" font-size="10" opacity="0.8">-</text>
+
                                 <!-- Elements Nodes -->
-                                <!-- Wood (Top) -->
                                 <circle cx="100" cy="30" r="15" fill="var(--wood-color)" />
                                 <text x="100" y="35" text-anchor="middle" fill="white" font-size="10" font-weight="bold">木</text>
-                                
-                                <!-- Fire (Right) -->
                                 <circle cx="166" cy="78" r="15" fill="var(--fire-color)" />
                                 <text x="166" y="83" text-anchor="middle" fill="white" font-size="10" font-weight="bold">火</text>
-                                
-                                <!-- Earth (Bottom Right) -->
                                 <circle cx="141" cy="156" r="15" fill="var(--earth-color)" />
                                 <text x="141" y="161" text-anchor="middle" fill="white" font-size="10" font-weight="bold">土</text>
-                                
-                                <!-- Metal (Bottom Left) -->
                                 <circle cx="59" cy="156" r="15" fill="var(--metal-color)" />
                                 <text x="59" y="161" text-anchor="middle" fill="white" font-size="10" font-weight="bold">金</text>
-                                
-                                <!-- Water (Left) -->
                                 <circle cx="34" cy="78" r="15" fill="var(--water-color)" />
                                 <text x="34" y="83" text-anchor="middle" fill="white" font-size="10" font-weight="bold">水</text>
-                                
-                                <!-- Relationship Arrows (Conceptual) -->
-                                <path d="M100 45 L150 70" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
-                                <path d="M166 93 L150 145" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
-                                <path d="M130 156 L70 156" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
-                                <path d="M45 145 L34 93" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
-                                <path d="M45 70 L90 45" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
                             </svg>
                         </div>
                         <div class="wuxing-bars">
