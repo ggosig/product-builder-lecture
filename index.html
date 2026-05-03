@@ -102,12 +102,19 @@
                     <p id="res-wealth"></p>
                 </div>
 
-                <!-- 궁합 추천 섹션 -->
+                <!-- 오늘의 운세 및 조언 섹션 -->
+                <div class="daily-fortune-section" style="margin-top: 50px; padding: 25px; background-color: rgba(166, 124, 82, 0.1); border-radius: 15px; border-left: 5px solid var(--accent-color);">
+                    <h4>오늘의 맞춤 운세 & 조언</h4>
+                    <p id="today-date" style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 15px;"></p>
+                    <div class="fortune-content">
+                        <p id="res-daily-fortune" style="font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent-color);"></p>
+                        <p id="res-daily-advice" style="line-height: 1.7;"></p>
+                    </div>
+                </div>
+
                 <div class="compatibility-section" style="margin-top: 50px; padding-top: 30px; border-top: 2px solid var(--accent-color);">
                     <h4>잘 맞는 사주 BEST 5</h4>
-                    <div id="compatibility-list" class="compatibility-list">
-                        <!-- 추천 목록이 여기에 동적으로 추가됨 -->
-                    </div>
+                    <div id="compatibility-list" class="compatibility-list"></div>
                 </div>
             </div>
         </div>

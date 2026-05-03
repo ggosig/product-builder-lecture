@@ -99,16 +99,28 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
             document.getElementById(`val-${el.id}`).textContent = percent + '%';
         });
 
-        // 3. 해석 및 궁합 생성
+        // 3. 오늘의 운세 계산
+        const todaySolar = SolarObj.fromDate(new Date());
+        const todayLunar = todaySolar.getLunar();
+        const todayEightChar = todayLunar.getEightChar();
+        const todayDayGan = todayEightChar.getDayGan(); // 오늘의 천간
+
+        // 4. 해석 및 궁합 생성
         const dayPillar = eightChar.getDay();
         const dayMaster = dayPillar.charAt(0);
-        const interpretations = generateInterpretations(dayMaster, gender, counts);
+        const interpretations = generateInterpretations(dayMaster, gender, counts, todayDayGan);
         
         document.getElementById('res-general').textContent = interpretations.general;
         document.getElementById('res-2026').textContent = interpretations.fortune2026;
         document.getElementById('res-wealth').textContent = interpretations.wealth;
 
-        // 4. 궁합 추천 표시
+        // 오늘의 운세 표시
+        const now = new Date();
+        document.getElementById('today-date').textContent = `현재 기준: ${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 (${todayEightChar.getDay()}일)`;
+        document.getElementById('res-daily-fortune').textContent = interpretations.dailyFortune;
+        document.getElementById('res-daily-advice').textContent = interpretations.dailyAdvice;
+
+        // 5. 궁합 추천 표시
         const compatibilityList = document.getElementById('compatibility-list');
         compatibilityList.innerHTML = '';
         interpretations.bestMatches.forEach(match => {
@@ -131,7 +143,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
     }
 });
 
-function generateInterpretations(dayMaster, gender, counts) {
+function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
     const wuxingNames = { 
         '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', 
         '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수',
@@ -159,7 +171,32 @@ function generateInterpretations(dayMaster, gender, counts) {
     if (counts[strongest] >= 3) wealth += "한쪽으로 치우친 기운을 조절하기 위해 절제와 균형 잡힌 생활이 필수적입니다. ";
     wealth += "부족한 기운을 보완하는 색상이나 장소(예: " + (counts['수'] < 1 ? "물 근처, 푸른색" : "산책, 녹색") + ")를 가까이하면 운이 상승합니다.";
 
-    // 궁합 추천 로직
+    // 오늘의 운세 & 조언 로직
+    const todayMe = wuxingNames[todayDayGan] || todayDayGan;
+    let dailyFortune = "";
+    let dailyAdvice = "";
+
+    if (me === todayMe) {
+        dailyFortune = "나와 같은 기운이 들어오는 날입니다. 주관이 뚜렷해지고 자신감이 넘칩니다.";
+        dailyAdvice = "자신의 생각을 밀고 나가기 좋은 날이지만, 자칫 고집스럽게 보일 수 있으니 주변의 의견을 경청하는 태도를 보이면 더 큰 행운이 따릅니다. 추천 활동: 독서, 명상.";
+    } else if (
+        (me === '목' && todayMe === '수') || (me === '화' && todayMe === '목') || 
+        (me === '토' && todayMe === '화') || (me === '금' && todayMe === '토') || (me === '수' && todayMe === '금')
+    ) {
+        dailyFortune = "나를 생(生)해주는 기운이 들어오는 날입니다. 인덕이 있고 예상치 못한 도움을 받을 수 있습니다.";
+        dailyAdvice = "새로운 일을 시작하거나 어려운 부탁을 하기에 적기입니다. 오늘은 밝은 미소로 사람들을 대하세요. 추천 행동: 지인에게 연락하기, 새로운 공부 시작.";
+    } else if (
+        (me === '목' && todayMe === '화') || (me === '화' && todayMe === '토') || 
+        (me === '토' && todayMe === '금') || (me === '금' && todayMe === '수') || (me === '수' && todayMe === '목')
+    ) {
+        dailyFortune = "나의 기운을 발산하는 날입니다. 창의력이 좋아지고 활동량이 늘어납니다.";
+        dailyAdvice = "자신의 능력을 마음껏 펼쳐보세요. 성과가 눈에 보이는 날입니다. 다만, 에너지를 너무 많이 써서 피곤할 수 있으니 충분한 휴식도 잊지 마세요. 추천 행동: 운동, 프로젝트 발표.";
+    } else {
+        dailyFortune = "변화와 자극이 있는 날입니다. 조금은 신중함이 필요한 시기입니다.";
+        dailyAdvice = "중요한 결정은 내일로 미루고, 오늘은 일상의 루틴을 지키며 내실을 다지는 것이 좋습니다. 차분한 음악을 들으며 하루를 정리해 보세요. 추천 행동: 집 정리, 일기 쓰기.";
+    }
+
+    // 궁합 추천 (기존 로직 유지)
     const matches = {
         '목': [
             { title: '수(水) 기운이 강한 사주', reason: '수생목(水生木)의 원리에 따라 물이 나무를 길러주듯 당신을 정신적으로 지지하고 성장을 돕는 최고의 파트너입니다.' },
@@ -187,18 +224,18 @@ function generateInterpretations(dayMaster, gender, counts) {
             { title: '수(水) 기운이 강한 사주', reason: '금생수(金生水)의 관계로 당신의 날카로운 성정을 부드럽게 정화하고 지혜로운 삶의 방향을 제시합니다.' },
             { title: '목(木) 기운이 강한 사주', reason: '당신의 결단력을 발휘할 수 있는 명확한 목표와 대상을 제공하여 성취감을 느끼게 합니다.' },
             { title: '천간 합(乙庚) 사주', reason: '강함과 부드러움이 만나는 이상적인 궁합으로, 서로를 보완하며 큰 발전을 이룹니다.' },
-            { title: '화(火) 기운이 적절한 사주', reason: '원석을 제련하여 쓸모 있는 도구로 만들듯 당신을 더욱 완성도 높은 사람으로 성장시킵니다.' }
+            { title: '화(火) 기운이 적절한 사주', reason: '원석을 제련하여 쓸모 있는 도구로 만들듯 당신을 더욱 완성도 높은 person으로 성장시킵니다.' }
         ],
         '수': [
             { title: '금(金) 기운이 강한 사주', reason: '금생수(金生水)의 원리로 마르지 않는 샘물처럼 당신에게 끊임없는 지식과 자원을 공급해 주는 후원자입니다.' },
-            { title: '목(木) 기운이 강한 사주', reason: '수생목(水生木)의 관계로 당신의 지혜가 결실을 맺을 수 있도록 실질적인 활동 무대를 제공합니다.' },
+            { title: '목(木) 기운이 강한 사주', reason: '수생목(수생목)의 관계로 당신의 지혜가 결실을 맺을 수 있도록 실질적인 활동 무대를 제공합니다.' },
             { title: '토(土) 기운이 적절한 사주', reason: '흐르는 물이 길을 잃지 않도록 제방이 되어주듯 당신의 삶에 명확한 규범과 안정을 가져다줍니다.' },
             { title: '천간 합(丁壬) 사주', reason: '정서적으로 깊은 공감을 나누며, 함께 있을 때 가장 편안함을 느끼는 소울메이트입니다.' },
             { title: '화(火) 기운이 풍부한 사주', reason: '당신의 차가운 기운을 녹여 활동적으로 변화시키며 재물적인 행운을 함께 가져옵니다.' }
         ]
     };
 
-    const bestMatches = matches[me] || matches['목']; // Fallback
+    const bestMatches = matches[me] || matches['목'];
 
-    return { general, fortune2026, wealth, bestMatches };
+    return { general, fortune2026, wealth, bestMatches, dailyFortune, dailyAdvice };
 }
