@@ -64,7 +64,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         document.getElementById('saju-day').textContent = eightChar.getDay();
         document.getElementById('saju-hour').textContent = eightChar.getTime();
 
-        // 2. 오행 분석 및 퍼센테이지 계산
+        // 2. 오행 분석 및 퍼센테이지 계산 (Kanji to Korean Mapping)
         const wuxingData = [
             eightChar.getYearWuXing(),
             eightChar.getMonthWuXing(),
@@ -72,14 +72,21 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
             eightChar.getTimeWuXing()
         ];
 
+        const elementMap = { '木': '목', '火': '화', '土': '토', '金': '금', '水': '수' };
         const counts = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
+        
         wuxingData.forEach(p => {
-            for (let char of p) {
-                if (counts.hasOwnProperty(char)) counts[char]++;
+            if (p) {
+                for (let char of p) {
+                    const kr = elementMap[char] || char;
+                    if (counts.hasOwnProperty(kr)) {
+                        counts[kr]++;
+                    }
+                }
             }
         });
 
-        const total = Object.values(counts).reduce((a, b) => a + b, 0);
+        const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
         const elements = [
             { id: 'wood', key: '목' },
             { id: 'fire', key: '화' },
@@ -113,10 +120,14 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
 });
 
 function generateInterpretations(dayMaster, gender, counts) {
-    const wuxingNames = { '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수' };
-    const me = wuxingNames[dayMaster];
+    // dayMaster is usually Kanji like '甲', map it to Korean
+    const wuxingNames = { 
+        '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', 
+        '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수',
+        '목': '목', '화': '화', '토': '토', '금': '금', '수': '수'
+    };
+    const me = wuxingNames[dayMaster] || dayMaster;
     
-    // 강점 기운 찾기
     const strongest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
     
     let general = `당신은 ${me}의 기운을 가진 ${gender === 'male' ? '남성' : '여성'}으로, 사주에 ${strongest}의 기운이 가장 강하게 나타납니다. `;
