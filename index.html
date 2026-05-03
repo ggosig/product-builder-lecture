@@ -25,22 +25,21 @@
                 <h2>사주 정보 입력</h2>
                 <div class="saju-inputs">
                     <div class="input-row">
-                        <input type="text" id="saju-name" placeholder="이름 (예: 홍길동)" required>
                         <select id="saju-gender">
                             <option value="male">남성</option>
                             <option value="female">여성</option>
                         </select>
+                        <input type="date" id="saju-birth-date" required>
                     </div>
                     <div class="input-row">
-                        <input type="date" id="saju-birth-date" required>
-                        <input type="time" id="saju-birth-time" required>
+                        <input type="time" id="saju-birth-time" required style="width: 100%;">
                     </div>
                     <button id="analyze-btn" class="analyze-btn">운세 분석하기</button>
                 </div>
             </div>
 
             <div id="analysis-result" class="analysis-result hidden">
-                <h3><span id="res-name"></span>님의 사주 분석 결과</h3>
+                <h3>당신의 사주 분석 결과</h3>
                 
                 <!-- 사주 팔자 테이블 -->
                 <div class="saju-table">

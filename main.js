@@ -23,13 +23,12 @@ themeBtn.addEventListener('click', () => {
 
 // Saju Analysis Logic
 document.getElementById('analyze-btn').addEventListener('click', () => {
-    const name = document.getElementById('saju-name').value;
     const gender = document.getElementById('saju-gender').value;
     const birthDate = document.getElementById('saju-birth-date').value;
     const birthTime = document.getElementById('saju-birth-time').value;
 
-    if (!name || !birthDate || !birthTime) {
-        alert('이름, 생년월일, 시간을 모두 입력해 주세요.');
+    if (!birthDate || !birthTime) {
+        alert('생년월일과 시간을 모두 입력해 주세요.');
         return;
     }
 
@@ -60,7 +59,6 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         const eightChar = lunar.getEightChar();
 
         // 1. 사주 팔자 표시
-        document.getElementById('res-name').textContent = name;
         document.getElementById('saju-year').textContent = eightChar.getYear();
         document.getElementById('saju-month').textContent = eightChar.getMonth();
         document.getElementById('saju-day').textContent = eightChar.getDay();
