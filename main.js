@@ -21,6 +21,17 @@ themeBtn.addEventListener('click', () => {
     }
 });
 
+// Hanja to Korean Mapping for GanZhi
+const ganZhiMap = {
+    '甲': '갑', '乙': '을', '丙': '병', '丁': '정', '戊': '무', '己': '기', '庚': '경', '辛': '신', '壬': '임', '癸': '계',
+    '子': '자', '丑': '축', '寅': '인', '卯': '묘', '辰': '진', '巳': '사', '午': '오', '未': '미', '申': '신', '酉': '유', '戌': '술', '亥': '해'
+};
+
+function toKorean(ganzhi) {
+    if (!ganzhi) return '';
+    return ganzhi.split('').map(char => ganZhiMap[char] || char).join('');
+}
+
 // Saju Analysis Logic
 document.getElementById('analyze-btn').addEventListener('click', () => {
     const gender = document.getElementById('saju-gender').value;
@@ -58,11 +69,19 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         const lunar = solar.getLunar();
         const eightChar = lunar.getEightChar();
 
-        // 1. 사주 팔자 표시
-        document.getElementById('saju-year').textContent = eightChar.getYear();
-        document.getElementById('saju-month').textContent = eightChar.getMonth();
-        document.getElementById('saju-day').textContent = eightChar.getDay();
-        document.getElementById('saju-hour').textContent = eightChar.getTime();
+        // 1. 사주 팔자 표시 (Hanja + Korean)
+        const pillars = [
+            { id: 'saju-year', value: eightChar.getYear() },
+            { id: 'saju-month', value: eightChar.getMonth() },
+            { id: 'saju-day', value: eightChar.getDay() },
+            { id: 'saju-hour', value: eightChar.getTime() }
+        ];
+
+        pillars.forEach(p => {
+            const hanja = p.value;
+            const korean = toKorean(hanja);
+            document.getElementById(p.id).innerHTML = `${hanja}<br><span style="font-size: 0.9rem; writing-mode: horizontal-tb; letter-spacing: 0; margin-top: 8px; display: block; color: var(--secondary-text); font-weight: normal;">(${korean})</span>`;
+        });
 
         // 2. 오행 분석 및 퍼센테이지 계산
         const wuxingData = [
@@ -148,16 +167,12 @@ function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
     const me = wuxingNames[dayMaster] || dayMaster;
     const strongest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
     
-    // 200자 내외로 확장된 성품 해석
     let general = `당신은 만물의 생명력을 상징하는 ${me}의 기운을 타고난 ${gender === 'male' ? '남성' : '여성'}입니다. 명리학적으로 ${me}은 ${me === '목' ? '성장과 인자함' : me === '화' ? '열정과 예절' : me === '토' ? '신용과 중용' : me === '금' ? '의리와 결단' : '지혜와 유연함'}을 의미하며, 이는 당신의 삶 전반에 걸쳐 강력한 신념으로 작용합니다. 특히 현재 사주에서는 ${strongest}의 에너지가 매우 강하게 자리 잡고 있어, 남들보다 뛰어난 추진력과 리더십을 발휘할 수 있는 잠재력을 가졌습니다. 다만 강한 기운이 때로는 독단적인 고집으로 비춰질 수 있으니 타인의 의견을 수렴하는 포용력을 기른다면 더욱 완벽한 운의 흐름을 탈 수 있습니다.`;
 
-    // 200자 내외로 확장된 2026년 운세
     let fortune2026 = `2026년 병오년(丙午年)은 천간의 뜨거운 태양과 지지의 활활 타오르는 불이 만나는 역동적인 '붉은 말'의 해입니다. 당신의 ${me} 기운이 이 강력한 화(火)의 에너지를 만났을 때, 삶의 무대가 확장되는 커다란 변화를 겪게 될 것입니다. 상반기에는 기존에 추진하던 일들이 가속도를 내며 성과를 보이기 시작할 것이며, 하반기에는 새로운 인연이나 기회가 찾아와 인생의 전환점을 맞이할 가능성이 높습니다. 다만 급격한 기운의 변화로 인해 감정 기복이 생길 수 있으니, 중요한 결정은 반드시 차분한 상태에서 내리시길 권장하며 과감한 도전이 큰 결실로 이어지는 한 해가 될 것입니다.`;
 
-    // 200자 내외로 확장된 건강/재물운
     let wealth = `재물운의 관점에서 보면, 현재 ${strongest} 기운이 강하게 작용하여 공격적인 투자보다는 실리를 챙기는 안정적인 자산 관리가 유리한 시기입니다. 2026년에는 특히 문서와 관련된 행운이 따르니 부동산 계약이나 장기적인 저축 계획을 세우기에 아주 적합합니다. 건강 면에서는 사주의 불균형으로 인해 ${me === '목' ? '간과 신경계' : me === '화' ? '심혈관 질환' : me === '토' ? '위장 및 소화기' : me === '금' ? '호흡기 및 대장' : '신장 및 방광'} 계통의 피로도가 높을 수 있습니다. 규칙적인 운동과 함께 ${counts['수'] < 1 ? '충분한 수분 섭취' : '차분한 명상'}을 생활화하여 체내 기운을 조절하는 것이 재물운을 지키는 가장 중요한 기초가 될 것입니다.`;
 
-    // 오늘의 운세 & 조언 (줄바꿈 포함)
     const todayMe = wuxingNames[todayDayGan] || todayDayGan;
     let dailyFortune = "";
     let dailyAdvice = "";
@@ -170,10 +185,9 @@ function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
         dailyAdvice = "오늘의 행동 지침:\n\n1. 평소 어려웠던 부탁이 있다면 오늘 시도해 보세요.\n2. 윗사람이나 전문가의 조언을 적극적으로 구하십시오.\n3. 감사의 표시를 작은 선물이나 메시지로 전해 보세요.\n4. 새로운 배움을 시작하거나 책을 읽기에 아주 좋습니다.\n\n주변의 긍정적인 에너지가 당신의 문제를 해결하는 열쇠가 되어줄 것입니다.";
     } else {
         dailyFortune = "변화의 기운이 감지되어 신중한 판단이 요구되는 날입니다.";
-        dailyAdvice = "오늘의 행동 지침:\n\n1. 중요한 계약이나 투자는 하루 정도 미루는 것이 좋습니다.\n2. 일상의 작은 루틴을 지키며 마음의 평온을 유지하세요.\n3. 주변의 사소한 시비에 휘말리지 않도록 언행을 삼가십시오.\n4. 퇴근 후 집 안을 정리하며 나쁜 기운을 밖으로 내보내세요.\n\n차분하게 자신을 돌아보는 시간이 내일의 더 큰 행운을 불러오는 밑거름이 됩니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 중요한 계약이나 투자는 하루 정도 미루는 것이 좋습니다.\n2. 일상의 작은 루틴을 지키며 마음의 평온을 유지하세요.\n3. 주변의 사소한 시비에 휘말리지 않도록 언행을 삼가하십시오.\n4. 퇴근 후 집 안을 정리하며 나쁜 기운을 밖으로 내보내세요.\n\n차분하게 자신을 돌아보는 시간이 내일의 더 큰 행운을 불러오는 밑거름이 됩니다.";
     }
 
-    // 궁합 추천 (200자 내외 확장)
     const matches = {
         '목': [
             { title: '수(水) 기운이 풍부한 지혜로운 사주', reason: '명리학의 수생목(水生木) 원리에 따라, 마르지 않는 샘물처럼 당신에게 끝없는 영감과 지식을 공급해 주는 최고의 파트너입니다. 당신의 추진력이 지칠 때쯤 따뜻한 위로와 냉철한 분석으로 삶의 방향을 잡아주며, 함께할 때 정서적으로 가장 큰 안정을 느낄 수 있는 인연입니다.' },
@@ -208,7 +222,7 @@ function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
             { title: '목(木) 기운이 생동감 넘치는 활동적 사주', reason: '수생목(水生木)의 관계로 당신의 깊은 생각과 지혜가 실질적인 결실을 맺을 수 있도록 행동력을 부여하는 파트너입니다. 당신의 아이디어를 현실화하는 추진력이 뛰어나며, 함께 새로운 프로젝트를 시작할 때 세상을 놀라게 할 결과를 만들어냅니다. 서로의 창의성을 극대화하며 삶에 활력을 불어넣는 즐거운 궁합입니다.' },
             { title: '토(土) 기운이 중용을 지키는 안정적 사주', reason: '자칫 방향을 잃고 흩어지기 쉬운 당신의 기운을 제방처럼 단단하게 가두어 큰 호수로 만들어주는 고마운 조력자입니다. 당신의 변화무쌍한 감정을 안정시켜 주며 사회적인 규범 안에서 명예를 얻을 수 있도록 길을 안내합니다. 서로의 다름을 인정하고 존중할 때 가장 견고하고 흔들림 없는 평생의 동반자 관계를 형성하게 됩니다.' },
             { title: '천간 합(丁壬)으로 소통하는 소울메이트', reason: '서로의 감정을 말하지 않아도 눈빛만으로 읽어낼 수 있는 깊은 정서적 유대감을 가집니다. 예술적인 감각이나 취미 생활에서 완벽한 일치를 보이며, 함께 있을 때 세상의 시름을 잊고 가장 순수한 자신으로 돌아갈 수 있는 힐링과 같은 인연입니다. 정서적 결핍을 채워주어 삶의 질을 한 단계 높여주는 특별한 만남이 될 것입니다.' },
-            { title: '화(火) 기운이 따뜻하게 녹여주는 사주', reason: '당신의 차갑고 냉철한 이성을 따뜻한 사랑과 열정으로 녹여 활동적인 사람으로 변화시켜 주는 태양 같은 인연입니다. 당신이 가진 재능을 세상 사람들이 좋아할 만한 화려한 모습으로 포장해 주며, 재물적인 기회를 포착하는 감각을 일깨워주어 풍요로운 삶을 함께 일구어갈 수 있도록 돕는 아주 매력적인 궁합입니다.' }
+            { title: '화(火) 기운이 따뜻하게 녹여주는 사주', reason: '당신의 차갑고 냉철한 이성을 따뜻한 사랑과 열정으로 녹여 활동적인 사람으로 변화시키며 재물적인 행운을 함께 가져올 수 있도록 돕는 아주 매력적인 궁합입니다.' }
         ]
     };
 
