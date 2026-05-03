@@ -153,20 +153,36 @@ h1 {
     padding: 20px;
     background-color: var(--container-bg);
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wuxing-flex {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.wuxing-diagram {
+    flex: 1;
+    max-width: 300px;
 }
 
 .wuxing-bars {
+    flex: 1.5;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 20px;
 }
 
 .wuxing-bar-item {
     display: grid;
-    grid-template-columns: 80px 1fr 60px;
+    grid-template-columns: 60px 1fr 60px;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .bar-container {
@@ -182,7 +198,29 @@ h1 {
     transition: width 1s ease-out;
 }
 
+.result-text h4 {
+    margin-top: 40px;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+    color: var(--accent-color);
+}
+
+.result-text p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
 .hidden { display: none; }
+
+@media (max-width: 768px) {
+    .wuxing-flex {
+        flex-direction: column;
+    }
+    .wuxing-diagram {
+        max-width: 250px;
+        margin-bottom: 20px;
+    }
+}
 
 @media (max-width: 600px) {
     .input-row { flex-direction: column; }

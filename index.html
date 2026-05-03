@@ -61,54 +61,89 @@
                 </div>
 
                 <div class="wuxing-section">
-                    <h4>오행(五行) 분포 분석</h4>
-                    <div class="wuxing-bars">
-                        <div class="wuxing-bar-item">
-                            <span>목(木)</span>
-                            <div class="bar-container"><div id="bar-wood" class="bar-fill" style="background-color: var(--wood-color);"></div></div>
-                            <span id="val-wood">0%</span>
+                    <h4>오행(五行) 분포 및 상관관계</h4>
+                    <div class="wuxing-flex">
+                        <div class="wuxing-diagram">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Creative Cycle (Outer Circle) -->
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="4" />
+                                
+                                <!-- Elements Nodes -->
+                                <!-- Wood (Top) -->
+                                <circle cx="100" cy="30" r="15" fill="var(--wood-color)" />
+                                <text x="100" y="35" text-anchor="middle" fill="white" font-size="10" font-weight="bold">木</text>
+                                
+                                <!-- Fire (Right) -->
+                                <circle cx="166" cy="78" r="15" fill="var(--fire-color)" />
+                                <text x="166" y="83" text-anchor="middle" fill="white" font-size="10" font-weight="bold">火</text>
+                                
+                                <!-- Earth (Bottom Right) -->
+                                <circle cx="141" cy="156" r="15" fill="var(--earth-color)" />
+                                <text x="141" y="161" text-anchor="middle" fill="white" font-size="10" font-weight="bold">土</text>
+                                
+                                <!-- Metal (Bottom Left) -->
+                                <circle cx="59" cy="156" r="15" fill="var(--metal-color)" />
+                                <text x="59" y="161" text-anchor="middle" fill="white" font-size="10" font-weight="bold">金</text>
+                                
+                                <!-- Water (Left) -->
+                                <circle cx="34" cy="78" r="15" fill="var(--water-color)" />
+                                <text x="34" y="83" text-anchor="middle" fill="white" font-size="10" font-weight="bold">水</text>
+                                
+                                <!-- Relationship Arrows (Conceptual) -->
+                                <path d="M100 45 L150 70" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
+                                <path d="M166 93 L150 145" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
+                                <path d="M130 156 L70 156" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
+                                <path d="M45 145 L34 93" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
+                                <path d="M45 70 L90 45" stroke="var(--accent-color)" stroke-width="1" marker-end="url(#arrow)" fill="none" />
+                            </svg>
                         </div>
-                        <div class="wuxing-bar-item">
-                            <span>화(火)</span>
-                            <div class="bar-container"><div id="bar-fire" class="bar-fill" style="background-color: var(--fire-color);"></div></div>
-                            <span id="val-fire">0%</span>
-                        </div>
-                        <div class="wuxing-bar-item">
-                            <span>토(土)</span>
-                            <div class="bar-container"><div id="bar-earth" class="bar-fill" style="background-color: var(--earth-color);"></div></div>
-                            <span id="val-earth">0%</span>
-                        </div>
-                        <div class="wuxing-bar-item">
-                            <span>금(金)</span>
-                            <div class="bar-container"><div id="bar-metal" class="bar-fill" style="background-color: var(--metal-color);"></div></div>
-                            <span id="val-metal">0%</span>
-                        </div>
-                        <div class="wuxing-bar-item">
-                            <span>수(水)</span>
-                            <div class="bar-container"><div id="bar-water" class="bar-fill" style="background-color: var(--water-color);"></div></div>
-                            <span id="val-water">0%</span>
+                        <div class="wuxing-bars">
+                            <div class="wuxing-bar-item">
+                                <span>목(木)</span>
+                                <div class="bar-container"><div id="bar-wood" class="bar-fill" style="background-color: var(--wood-color);"></div></div>
+                                <span id="val-wood">0%</span>
+                            </div>
+                            <div class="wuxing-bar-item">
+                                <span>화(火)</span>
+                                <div class="bar-container"><div id="bar-fire" class="bar-fill" style="background-color: var(--fire-color);"></div></div>
+                                <span id="val-fire">0%</span>
+                            </div>
+                            <div class="wuxing-bar-item">
+                                <span>토(土)</span>
+                                <div class="bar-container"><div id="bar-earth" class="bar-fill" style="background-color: var(--earth-color);"></div></div>
+                                <span id="val-earth">0%</span>
+                            </div>
+                            <div class="wuxing-bar-item">
+                                <span>금(金)</span>
+                                <div class="bar-container"><div id="bar-metal" class="bar-fill" style="background-color: var(--metal-color);"></div></div>
+                                <span id="val-metal">0%</span>
+                            </div>
+                            <div class="wuxing-bar-item">
+                                <span>수(水)</span>
+                                <div class="bar-container"><div id="bar-water" class="bar-fill" style="background-color: var(--water-color);"></div></div>
+                                <span id="val-water">0%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="result-text">
-                    <h4>타고난 성품과 기운</h4>
+                    <h4>타고난 성품과 기운 분석</h4>
                     <p id="res-general"></p>
                     
-                    <h4>2026년 병오년(丙午年) 총평</h4>
+                    <h4>2026년 병오년(丙午年) 총운세</h4>
                     <p id="res-2026"></p>
 
-                    <h4>상세 운세 조언</h4>
+                    <h4>건강 및 재물운 상세 조언</h4>
                     <p id="res-wealth"></p>
                 </div>
 
-                <!-- 오늘의 운세 및 조언 섹션 -->
-                <div class="daily-fortune-section" style="margin-top: 50px; padding: 25px; background-color: rgba(166, 124, 82, 0.1); border-radius: 15px; border-left: 5px solid var(--accent-color);">
-                    <h4>오늘의 맞춤 운세 & 조언</h4>
-                    <p id="today-date" style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 15px;"></p>
+                <div class="daily-fortune-section" style="margin-top: 50px; padding: 30px; background-color: rgba(166, 124, 82, 0.1); border-radius: 15px; border-left: 5px solid var(--accent-color);">
+                    <h4>오늘의 맞춤 운세 & 행동 가이드</h4>
+                    <p id="today-date" style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 20px;"></p>
                     <div class="fortune-content">
-                        <p id="res-daily-fortune" style="font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent-color);"></p>
-                        <p id="res-daily-advice" style="line-height: 1.7;"></p>
+                        <p id="res-daily-fortune" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; color: var(--accent-color);"></p>
+                        <div id="res-daily-advice" style="line-height: 1.8; white-space: pre-line;"></div>
                     </div>
                 </div>
 
