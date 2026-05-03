@@ -237,33 +237,33 @@ const modalBody = document.getElementById('modal-body');
 const policies = {
     privacy: `
         <h2>개인정보처리방침</h2>
-        <p>명리연구소는 사용자의 개인정보를 중요하게 생각합니다.</p>
+        <p>명리연구소는 사용자의 개인정보 보호를 최우선으로 하며, 관련 법령을 준수합니다.</p>
         <ul>
-            <li><strong>수집 항목:</strong> 생년월일, 태어난 시간, 성별 (사주 분석 목적)</li>
-            <li><strong>수집 방법:</strong> 사용자가 웹 폼에 직접 입력</li>
-            <li><strong>보관 및 이용:</strong> 입력된 데이터는 브라우저 내에서 즉시 분석용으로만 사용되며, 서버에 저장되거나 외부로 전송되지 않습니다.</li>
-            <li><strong>쿠키 사용:</strong> 본 사이트는 테마 설정(다크 모드) 저장을 위해 로컬 스토리지를 사용하며, 광고 최적화를 위해 구글 에드센스 쿠키가 사용될 수 있습니다.</li>
+            <li><strong>개인정보 수집 및 이용:</strong> 본 사이트는 사용자의 생년월일, 성별, 태어난 시간 데이터를 사주 분석 및 결과 도출을 위해 일시적으로 사용합니다.</li>
+            <li><strong>데이터 저장:</strong> 입력된 모든 정보는 서버에 저장되지 않으며, 브라우저 세션이 종료되면 즉시 소멸됩니다.</li>
+            <li><strong>타사 쿠키 및 광고:</strong> 본 사이트는 Google AdSense 광고를 게재하며, Google은 사용자의 방문 기록을 바탕으로 맞춤형 광고를 제공하기 위해 쿠키를 사용합니다. 사용자는 Google 광고 설정에서 맞춤형 광고를 거부할 수 있습니다.</li>
+            <li><strong>문의:</strong> 개인정보와 관련된 문의는 support@myeongri-lab.example.com으로 연락 바랍니다.</li>
         </ul>
     `,
     terms: `
-        <h2>이용약관</h2>
-        <p>본 서비스를 이용함으로써 귀하는 다음 약관에 동의하게 됩니다.</p>
+        <h2>서비스 이용약관</h2>
+        <p>명리연구소(이하 "연구소")가 제공하는 모든 서비스 이용에 관한 사항을 규정합니다.</p>
         <ul>
-            <li>본 서비스는 명리학적 데이터를 기반으로 한 정보 제공을 목적으로 합니다.</li>
-            <li>제공되는 결과는 과학적 근거가 없으며, 오직 참고용으로만 활용되어야 합니다.</li>
-            <li>사용자의 잘못된 입력으로 인한 분석 오류에 대해 책임지지 않습니다.</li>
+            <li>사용자는 본 서비스를 개인적, 비상업적 용도로만 이용할 수 있습니다.</li>
+            <li>분석 결과는 명리학적 데이터에 기반한 추정치이며, 실제 결과와 다를 수 있습니다.</li>
+            <li>사용자의 오입력으로 인한 결과에 대해 연구소는 책임을 지지 않습니다.</li>
         </ul>
     `,
     disclaimer: `
-        <h2>책임부인 (Disclaimer)</h2>
-        <p>명리연구소에서 제공하는 모든 분석 결과와 조언은 명리학적 해석에 기초한 것으로, 미래를 보장하거나 과학적으로 증명된 사실이 아닙니다.</p>
-        <p>사용자는 본 정보를 바탕으로 내린 결정에 대해 전적으로 책임을 지며, 본 연구소는 서비스 이용 중 발생한 어떠한 직간접적 손해에 대해서도 책임을 지지 않습니다.</p>
+        <h2>책임부인 및 법적 고지</h2>
+        <p>명리연구소의 사주 분석 서비스는 과학적으로 검증된 것이 아니며, 동양 철학인 명리학의 이론적 해석을 제공하는 것입니다.</p>
+        <p>제공되는 정보는 어떠한 법적, 재무적, 의학적 효력도 없으며, 중대한 결정의 근거로 사용되어서는 안 됩니다. 본 정보를 바탕으로 행한 모든 행동에 대한 책임은 사용자 본인에게 있습니다.</p>
     `,
     contact: `
-        <h2>문의하기</h2>
-        <p>서비스 이용 중 불편한 점이나 제안 사항이 있으시면 아래 이메일로 연락 주시기 바랍니다.</p>
+        <h2>고객 지원 및 문의</h2>
+        <p>서비스 이용 중 불편한 점이나 광고 관련 제휴 문의는 아래 채널을 이용해 주세요.</p>
         <p><strong>Email:</strong> support@myeongri-lab.example.com</p>
-        <p>평일 09:00 ~ 18:00 (주말 및 공휴일 제외)</p>
+        <p><strong>운영 시간:</strong> 평일 10:00 - 17:00</p>
     `
 };
 
@@ -271,16 +271,15 @@ function showModal(type) {
     if (policies[type]) {
         modalBody.innerHTML = policies[type];
         modal.classList.remove('hidden');
-        body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
     }
 }
 
 function hideModal() {
     modal.classList.add('hidden');
-    body.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     if (event.target == modal) {
         hideModal();

@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-312BMGXSQF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-312BMGXSQF');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026년 정통 사주풀이 - 무료 운세 및 명리학 분석 서비스</title>
-    <meta name="description" content="2026년 병오년 정통 사주풀이 서비스를 제공합니다. 생년월일시 기반 오행 분석, 오늘의 운세, 궁합 등 깊이 있는 명리학 데이터를 무료로 확인하세요.">
-    <meta name="keywords" content="사주, 사주풀이, 2026년운세, 병오년운세, 무료사주, 오늘의운세, 오행분석, 궁합">
+    <title>2026년 정통 사주풀이 - 명리학 전문 분석 서비스</title>
+    <meta name="description" content="2026년 병오년(丙午年)을 맞아 정통 명리학 기반의 사주 분석 서비스를 제공합니다. 오행 분포, 오늘의 운세, 2026년 총평 및 궁합 분석을 무료로 확인하세요.">
+    <meta name="keywords" content="사주, 사주풀이, 2026년운세, 병오년, 무료사주, 오늘의운세, 명리학, 오행분석, 궁합, 명리연구소">
+    <link rel="canonical" href="https://product-builder-lecture-dvb.pages.dev/">
     <link rel="stylesheet" href="style.css">
-    <!-- AdSense Auto Ads Script Placeholder (User should replace with their actual ID) -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 </head>
 <body>
     <header class="main-header">
@@ -18,8 +25,8 @@
             </div>
             <nav class="site-nav">
                 <a href="#analysis-section" class="nav-link">사주분석</a>
-                <a href="#knowledge-section" class="nav-link">명리학습</a>
-                <a href="#about-section" class="nav-link">연구소소개</a>
+                <a href="#knowledge-section" class="nav-link">명리학백과</a>
+                <a href="#about-section" class="nav-link">이용안내</a>
                 <button id="theme-btn">다크 모드</button>
             </nav>
         </div>
@@ -28,33 +35,30 @@
     <main class="container">
         <section class="hero-section">
             <h1>2026년 정통 사주풀이</h1>
-            <p class="subtitle">명리학의 깊이를 담아 당신의 타고난 운명과 2026년 병오년(丙午年)의 흐름을 정밀하게 분석합니다.</p>
+            <p class="subtitle">개인의 탄생 데이터를 명리학적으로 분석하여 삶의 방향과 2026년의 기운을 안내합니다.</p>
         </section>
-
-        <!-- Ad Slot Placeholder -->
-        <div class="ad-placeholder top-ad">광고 영역</div>
 
         <section id="analysis-section" class="analysis-section">
             <div class="analysis-card">
-                <h2>사주 정보 입력</h2>
-                <p class="info-text">정확한 분석을 위해 정확한 생년월일과 태어난 시간을 입력해 주세요.</p>
+                <h2>사주 분석 정보 입력</h2>
+                <p class="info-text">정확한 연주, 월주, 일주, 시주 계산을 위해 정확한 정보를 입력해 주세요.</p>
                 <div class="saju-inputs">
                     <div class="input-row">
                         <select id="saju-gender" aria-label="성별 선택">
-                            <option value="male">남성</option>
-                            <option value="female">여성</option>
+                            <option value="male">남성 (Male)</option>
+                            <option value="female">여성 (Female)</option>
                         </select>
                         <input type="date" id="saju-birth-date" required aria-label="생년월일 선택">
                     </div>
                     <div class="input-row">
                         <input type="time" id="saju-birth-time" required style="width: 100%;" aria-label="태어난 시간 선택">
                     </div>
-                    <button id="analyze-btn" class="analyze-btn">무료 운세 분석하기</button>
+                    <button id="analyze-btn" class="analyze-btn">무료 결과 확인하기</button>
                 </div>
             </div>
 
             <div id="analysis-result" class="analysis-result hidden">
-                <h3>당신의 사주 분석 결과</h3>
+                <h3>당신의 명리 분석 리포트</h3>
                 
                 <div class="saju-table">
                     <div class="saju-column">
@@ -76,7 +80,7 @@
                 </div>
 
                 <div class="wuxing-section">
-                    <h4>오행(五行) 분포 및 상관관계</h4>
+                    <h4>오행(五行) 분포 및 생극관계</h4>
                     <div class="wuxing-flex">
                         <div class="wuxing-diagram">
                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -159,12 +163,12 @@
                     <p id="res-wealth"></p>
                 </div>
 
-                <div class="daily-fortune-section">
+                <div class="daily-fortune-section" style="margin-top: 50px; padding: 30px; background-color: rgba(166, 124, 82, 0.1); border-radius: 15px; border-left: 5px solid var(--accent-color);">
                     <h4>오늘의 맞춤 운세 & 행동 가이드</h4>
-                    <p id="today-date" class="date-info"></p>
+                    <p id="today-date" style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 20px;"></p>
                     <div class="fortune-content">
-                        <p id="res-daily-fortune" class="fortune-title"></p>
-                        <div id="res-daily-advice" class="advice-box"></div>
+                        <p id="res-daily-fortune" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; color: var(--accent-color);"></p>
+                        <div id="res-daily-advice" style="line-height: 1.8; white-space: pre-line;"></div>
                     </div>
                 </div>
 
@@ -176,46 +180,57 @@
         </section>
 
         <!-- Ad Slot Placeholder -->
-        <div class="ad-placeholder mid-ad">광고 영역</div>
+        <div class="ad-placeholder mid-ad">사주 분석 결과를 확인해 보세요.</div>
 
         <section id="knowledge-section" class="content-section">
-            <h2>명리학 기초 지식</h2>
+            <h2>명리학백과: 운명을 읽는 지혜</h2>
             <div class="article-grid">
                 <article class="article-item">
-                    <h3>사주팔자란 무엇인가?</h3>
-                    <p>사주(四柱)는 연, 월, 일, 시의 네 기둥을 의미하며, 팔자(八字)는 각 기둥에 위치한 여덟 글자를 뜻합니다. 이는 태어난 순간의 우주적 기운을 기록한 고유의 지도와 같습니다.</p>
+                    <h3>사주팔자의 원리와 구성</h3>
+                    <p>사주(四柱)는 사람이 태어난 연, 월, 일, 시를 네 개의 기둥으로 세운 것입니다. 각 기둥에는 천간과 지지가 하나씩 배치되어 총 여덟 글자(팔자)가 됩니다. 이 글자들은 단순히 시간을 기록한 것이 아니라, 그 시점에 우주에 가득했던 에너지의 조성을 의미합니다. 자신의 사주를 이해하는 것은 자신의 재능과 한계를 객관적으로 파악하고, 삶의 파도를 지혜롭게 넘는 첫걸음입니다.</p>
                 </article>
                 <article class="article-item">
-                    <h3>오행(五行)의 원리</h3>
-                    <p>우주 만물을 구성하는 다섯 가지 요소인 목(木), 화(火), 토(土), 금(金), 수(水)의 상호작용을 통해 개인의 성정과 운명의 흐름을 파악하는 것이 명리학의 핵심입니다.</p>
+                    <h3>오행의 상생과 상극 관계</h3>
+                    <p>명리학의 기초가 되는 오행(목, 화, 토, 금, 수)은 서로를 돕기도 하고(상생), 서로를 견제하기도 합니다(상극). 나무는 불을 피우고(목생화), 불은 타서 흙이 되며(화생토), 흙은 단단해져 바위(금)를 품고(토생금), 바위 사이로 물이 흐르며(금생수), 물은 다시 나무를 기릅니다(수생목). 이러한 순환과 균형의 원리를 통해 자신의 성격과 사회적 관계를 정밀하게 분석할 수 있습니다.</p>
                 </article>
                 <article class="article-item">
-                    <h3>2026년 병오년의 의미</h3>
-                    <p>병(丙)은 하늘의 태양과 같은 뜨거운 기운을, 오(午)는 땅의 활기찬 말을 의미합니다. 2026년은 그 어느 때보다 역동적이고 뜨거운 변화가 일어나는 해가 될 것입니다.</p>
+                    <h3>2026년 병오년(丙午年) 미리보기</h3>
+                    <p>2026년은 병오년으로, 십간의 '병(丙)'은 태양과 같은 화(火)의 기운이며, 십이지의 '오(午)'는 역동적인 말(馬)을 상징하는 화(火)의 기운입니다. 하늘과 땅이 모두 강렬한 불의 기운으로 가득 찬 '붉은 말'의 해입니다. 이 해는 정체되었던 일들이 폭발적으로 전개되거나, 혁신적인 변화가 일어나는 역동적인 시기가 될 것입니다. 본인의 사주와 이 강력한 기운이 어떻게 상호작용하는지 확인하는 것이 중요합니다.</p>
+                </article>
+                <article class="article-item">
+                    <h3>일간(日干): 진정한 자아의 상징</h3>
+                    <p>사주팔자 여덟 글자 중에서도 태어난 날의 천간인 '일간'은 본인을 상징하는 가장 핵심적인 글자입니다. 일간이 어떤 오행인지에 따라 그 사람의 기본적인 성품과 가치관이 결정됩니다. 예를 들어 갑목(甲木)은 위로 뻗으려는 성질이 강하고, 계수(癸水)는 유연하고 지혜로운 성질을 가집니다. 일간을 중심으로 주변 글자들과의 조화를 살피는 것이 명리학 분석의 정수입니다.</p>
+                </article>
+                <article class="article-item">
+                    <h3>운의 흐름과 대운(大運)</h3>
+                    <p>운명은 고정된 것이 아니라 흐르는 것입니다. 명리학에서는 10년마다 바뀌는 큰 운의 흐름을 '대운'이라고 부릅니다. 타고난 사주(원국)가 자동차라면, 대운은 그 자동차가 달리는 길의 상태와 같습니다. 아무리 좋은 사주라도 험한 길을 만날 수 있고, 평범한 사주라도 잘 닦인 고속도로를 만날 수 있습니다. 대운의 변화를 읽어 미리 준비하는 것이 운세를 보는 가장 큰 이유입니다.</p>
                 </article>
             </div>
         </section>
 
         <section id="about-section" class="content-section">
-            <h2>명리연구소 소개</h2>
-            <p>본 연구소는 정통 명리학 데이터를 기반으로 현대적인 알고리즘을 결합하여, 누구나 쉽고 정확하게 자신의 운명을 이해할 수 있도록 돕는 서비스를 제공합니다. 모든 분석 데이터는 개인 기기에만 일시적으로 사용되며, 서버에 별도로 저장되지 않아 안심하고 이용하실 수 있습니다.</p>
+            <h2>명리연구소 이용안내</h2>
+            <p>본 사이트는 정통 명리학 이론을 현대적인 프로그래밍 기법으로 구현한 사주 분석 플랫폼입니다. 사용자가 입력한 생년월일시는 오직 결과 도출을 위해서만 사용되며, 개인정보 보호를 위해 서버에 일절 저장되지 않습니다. 명리학은 결정론적인 미래를 예언하는 도구가 아니라, 자신의 성향을 파악하고 최선의 선택을 할 수 있도록 돕는 도구입니다. 본 서비스의 결과는 개인의 참고용으로만 활용하시기를 권장합니다.</p>
         </section>
     </main>
 
     <footer class="main-footer">
         <div class="container-footer">
-            <p>&copy; 2026 명리연구소. All rights reserved.</p>
+            <div class="footer-logo">명리연구소</div>
+            <p class="copyright">&copy; 2026 명리연구소 (Myeongri Research Lab). All rights reserved.</p>
             <div class="footer-links">
                 <a href="#privacy" onclick="showModal('privacy')">개인정보처리방침</a>
+                <span class="sep">|</span>
                 <a href="#terms" onclick="showModal('terms')">이용약관</a>
+                <span class="sep">|</span>
                 <a href="#disclaimer" onclick="showModal('disclaimer')">책임부인</a>
+                <span class="sep">|</span>
                 <a href="#contact" onclick="showModal('contact')">문의하기</a>
             </div>
-            <p class="disclaimer-text">※ 본 서비스는 참고용이며, 중대한 결정 시에는 전문가와 상담하시기 바랍니다.</p>
+            <p class="disclaimer-text">※ 경고: 본 서비스의 모든 콘텐츠는 저작권법의 보호를 받습니다. 무단 전재 및 복사를 금합니다. 본 분석 결과는 명리학적 통계에 기초한 것으로 과학적 사실과는 무관할 수 있습니다.</p>
         </div>
     </footer>
 
-    <!-- Modals for Policies -->
     <div id="policy-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" onclick="hideModal()">&times;</span>
@@ -227,4 +242,3 @@
     <script src="main.js"></script>
 </body>
 </html>
-
