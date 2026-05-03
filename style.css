@@ -5,7 +5,12 @@
     --card-bg: #ffffff;
     --text-color: #4a3728;
     --secondary-text: #8c7b70;
-    --accent-color: #a67c52; /* Warm Brown */
+    --accent-color: #a67c52;
+    --wood-color: #4CAF50;
+    --fire-color: #F44336;
+    --earth-color: #FFC107;
+    --metal-color: #9E9E9E;
+    --water-color: #2196F3;
 }
 
 body.dark-mode {
@@ -37,7 +42,6 @@ body {
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
 }
 
 .header-top {
@@ -77,18 +81,11 @@ h1 {
     margin-bottom: 40px;
 }
 
-/* Analysis Section */
 .analysis-section {
     margin-top: 40px;
     padding: 40px;
     background-color: var(--card-bg);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
-
-.saju-inputs {
-    max-width: 600px;
-    margin: 0 auto;
 }
 
 .input-row {
@@ -104,13 +101,6 @@ h1 {
     border-radius: 8px;
     background-color: var(--container-bg);
     color: var(--text-color);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.input-row input:focus, .input-row select:focus {
-    border-color: var(--accent-color);
 }
 
 .analyze-btn {
@@ -123,32 +113,13 @@ h1 {
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s;
 }
 
-.analyze-btn:hover {
-    background-color: #8c6a4a;
-    transform: translateY(-2px);
-}
-
-/* Results */
 .analysis-result {
     margin-top: 50px;
     padding-top: 30px;
     border-top: 2px solid var(--accent-color);
     text-align: left;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.analysis-result h3 {
-    text-align: center;
-    color: var(--accent-color);
-    margin-bottom: 30px;
 }
 
 .saju-table {
@@ -166,14 +137,6 @@ h1 {
     padding: 20px;
     border-radius: 12px;
     width: 100px;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
-}
-
-.saju-label {
-    font-size: 0.9rem;
-    color: var(--secondary-text);
-    margin-bottom: 15px;
-    font-weight: bold;
 }
 
 .saju-kanji {
@@ -182,46 +145,47 @@ h1 {
     color: var(--accent-color);
     writing-mode: vertical-rl;
     letter-spacing: 8px;
-    line-height: 1;
 }
 
-.result-text h4 {
-    color: var(--accent-color);
-    margin-top: 30px;
-    margin-bottom: 15px;
-    border-left: 5px solid var(--accent-color);
-    padding-left: 15px;
-    font-size: 1.3rem;
+/* Five Elements Visualization */
+.wuxing-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: var(--container-bg);
+    border-radius: 15px;
 }
 
-.result-text p {
-    line-height: 1.8;
-    color: var(--text-color);
-    font-size: 1.05rem;
-    margin-bottom: 20px;
+.wuxing-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
 }
 
-.hidden {
-    display: none;
+.wuxing-bar-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    align-items: center;
+    gap: 15px;
 }
+
+.bar-container {
+    height: 12px;
+    background-color: #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s ease-out;
+}
+
+.hidden { display: none; }
 
 @media (max-width: 600px) {
-    .input-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .saju-table {
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    .saju-column {
-        width: 70px;
-        padding: 15px;
-    }
-    .saju-kanji {
-        font-size: 1.6rem;
-    }
-    h1 {
-        font-size: 2rem;
-    }
+    .input-row { flex-direction: column; }
+    .saju-table { gap: 10px; flex-wrap: wrap; }
+    .saju-column { width: 70px; }
 }

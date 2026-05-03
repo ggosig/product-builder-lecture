@@ -42,6 +42,7 @@
             <div id="analysis-result" class="analysis-result hidden">
                 <h3><span id="res-name"></span>님의 사주 분석 결과</h3>
                 
+                <!-- 사주 팔자 테이블 -->
                 <div class="saju-table">
                     <div class="saju-column">
                         <div class="saju-label">시주(時柱)</div>
@@ -61,6 +62,38 @@
                     </div>
                 </div>
 
+                <!-- 오행 분석 섹션 -->
+                <div class="wuxing-section">
+                    <h4>오행(五行) 분포 분석</h4>
+                    <div class="wuxing-bars">
+                        <div class="wuxing-bar-item">
+                            <span>목(木)</span>
+                            <div class="bar-container"><div id="bar-wood" class="bar-fill" style="background-color: var(--wood-color);"></div></div>
+                            <span id="val-wood">0%</span>
+                        </div>
+                        <div class="wuxing-bar-item">
+                            <span>화(火)</span>
+                            <div class="bar-container"><div id="bar-fire" class="bar-fill" style="background-color: var(--fire-color);"></div></div>
+                            <span id="val-fire">0%</span>
+                        </div>
+                        <div class="wuxing-bar-item">
+                            <span>토(土)</span>
+                            <div class="bar-container"><div id="bar-earth" class="bar-fill" style="background-color: var(--earth-color);"></div></div>
+                            <span id="val-earth">0%</span>
+                        </div>
+                        <div class="wuxing-bar-item">
+                            <span>금(金)</span>
+                            <div class="bar-container"><div id="bar-metal" class="bar-fill" style="background-color: var(--metal-color);"></div></div>
+                            <span id="val-metal">0%</span>
+                        </div>
+                        <div class="wuxing-bar-item">
+                            <span>수(水)</span>
+                            <div class="bar-container"><div id="bar-water" class="bar-fill" style="background-color: var(--water-color);"></div></div>
+                            <span id="val-water">0%</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="result-text">
                     <h4>타고난 성품과 기운</h4>
                     <p id="res-general"></p>
@@ -68,23 +101,14 @@
                     <h4>2026년 병오년(丙午年) 총평</h4>
                     <p id="res-2026"></p>
 
-                    <h4>건강 및 재물운</h4>
+                    <h4>상세 운세 조언</h4>
                     <p id="res-wealth"></p>
                 </div>
             </div>
         </div>
 
         <div id="disqus_thread" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--secondary-text);"></div>
-        <script>
-            (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://productbuilder-5ea7zarf6b.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-        </script>
     </div>
-    <!-- Load library before main.js -->
     <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
     <script src="main.js"></script>
 </body>
