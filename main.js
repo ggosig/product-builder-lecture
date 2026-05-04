@@ -207,10 +207,16 @@ function generateInterpretations(dayMasterHanja, gender, birthInfo, todayDayGanH
         '수': '지혜와 유연함, 깊은 감수성을 간직합니다.'
     };
 
+    const yearPillarKor = toKorean(birthInfo.yearPillar);
+    const monthPillarKor = toKorean(birthInfo.monthPillar);
+    const dayPillarKor = toKorean(birthInfo.dayPillar);
+    const timePillarKor = toKorean(birthInfo.timePillar);
+    const dayMasterKor = toKorean(dayMasterHanja);
+
     const strongMessage = strongCount >= 3 ? '원국에서 이 기운이 확실히 지지되어 자신감과 추진력이 강하게 작용합니다.' : '이 기운이 다소 약한 편이지만 조화롭게 활용하면 충분히 안정감을 만들 수 있습니다.';
     const weaknessMessage = deficiency.length > 0 ? `${deficiency.join(' , ')} 기운이 부족하여 해당 분야에서 부족함을 느낄 수 있습니다.` : '오행이 비교적 골고루 분포되어 있어 균형 잡힌 흐름을 만들기 좋습니다.';
 
-    let general = `당신은 ${birthInfo.yearPillar}(${yearBranch})년 ${birthInfo.monthPillar}(${monthBranch})월 ${birthInfo.dayPillar}(${dayBranch})일 ${birthInfo.timePillar}(${hourLabel})에 태어난 ${gender === 'male' ? '남성' : '여성'}입니다. 일간은 ${dayMasterHanja}로 ${elementNames[me]}의 기운이 강하며, 이는 ${dayMasterDescription[me]} ${strongMessage}`;
+    let general = `당신은 ${birthInfo.yearPillar}(${yearPillarKor})년 ${birthInfo.monthPillar}(${monthPillarKor})월 ${birthInfo.dayPillar}(${dayPillarKor})일 ${birthInfo.timePillar}(${timePillarKor}, ${hourLabel})에 태어난 ${gender === 'male' ? '남성' : '여성'}입니다. 일간은 ${dayMasterHanja}(${dayMasterKor})로 ${elementNames[me]}의 기운이 강하며, 이는 ${dayMasterDescription[me]} ${strongMessage}`;
     general += ` 현재 오행 분포는 ${Object.entries(counts).map(([key, value]) => `${elementNames[key]} ${value}개`).join(', ')}로 나타납니다. ${weaknessMessage}`;
 
     const year2026Effect = {
