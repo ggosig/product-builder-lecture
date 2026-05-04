@@ -127,7 +127,19 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         // 4. 해석 및 궁합 생성
         const dayPillar = eightChar.getDay();
         const dayMaster = dayPillar.charAt(0); // 일간 (Hanja)
-        const interpretations = generateInterpretations(dayMaster, gender, counts, todayDayGan);
+        const birthInfo = {
+            year,
+            month,
+            day,
+            hour,
+            minute,
+            yearPillar: eightChar.getYear(),
+            monthPillar: eightChar.getMonth(),
+            dayPillar: eightChar.getDay(),
+            timePillar: eightChar.getTime(),
+            wuxingCounts: counts
+        };
+        const interpretations = generateInterpretations(dayMaster, gender, birthInfo, todayDayGan);
         
         document.getElementById('res-general').textContent = interpretations.general;
         document.getElementById('res-2026').textContent = interpretations.fortune2026;
@@ -162,20 +174,28 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
     }
 });
 
-function generateInterpretations(dayMasterHanja, gender, counts, todayDayGanHanja) {
+function generateInterpretations(dayMasterHanja, gender, birthInfo, todayDayGanHanja) {
     const wuxingNames = { '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수' };
     const ganIndex = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
     const meIdx = ganIndex.indexOf(dayMasterHanja);
     const todayIdx = ganIndex.indexOf(todayDayGanHanja);
-    
     const me = wuxingNames[dayMasterHanja];
-    const strongest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    const counts = birthInfo.wuxingCounts || { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
+    const strongest = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+    const total = Object.values(counts).reduce((sum, value) => sum + value, 0) || 1;
 
-    let general = '당신은 만물의 생명력을 상징하는 ' + me + '의 기운을 타고난 ' + (gender === 'male' ? '남성' : '여성') + '입니다. 명리학적으로 ' + me + '은 ' + (me === '목' ? '성장과 인자함' : me === '화' ? '열정과 예절' : me === '토' ? '신용과 중용' : me === '금' ? '의리와 결단' : '지혜와 유연함') + '을 의미하며, 이는 당신의 삶 전반에 걸쳐 강력한 신념으로 작용합니다. 특히 현재 사주에서는 ' + strongest + '의 에너지가 매우 강하게 자리 잡고 있어, 남들보다 뛰어난 추진력과 리더십을 발휘할 수 있는 잠재력을 가졌습니다. 다만 강한 기운이 때로는 독단적인 고집으로 비춰질 수 있으니 타인의 의견을 수렴하는 포용력을 기른다면 더욱 완벽한 운의 흐름을 탈 수 있습니다.';
+    const seasonMap = { 1: '겨울', 2: '봄', 3: '여름', 4: '가을' };
+    const seasonIndex = Math.floor(((birthInfo.month + 9) % 12) / 3) + 1;
+    const season = seasonMap[seasonIndex] || '계절';
+    const hourLabel = birthInfo.hour < 6 ? '이른 새벽' : birthInfo.hour < 12 ? '아침' : birthInfo.hour < 18 ? '오후' : '저녁';
+    const strengthMessage = counts[me] >= 3 ? '당신의 일간 기운이 원국에서 탄탄하게 받쳐주고 있습니다.' : '당신의 일간 기운이 다소 도전적인 상황이지만, 유연하게 접근할수록 호전됩니다.';
+    const elementDetail = Object.entries(counts).map(([key, value]) => `${key}${value}`).join(', ');
 
-    let fortune2026 = '2026년 병오년(丙午年)은 천간의 뜨거운 태양과 지지의 활활 타오르는 불이 만나는 역동적인 "붉은 말"의 해입니다. 당신의 ' + me + ' 기운이 이 강력한 화(火)의 에너지를 만났을 때, 삶의 무대가 확장되는 커다란 변화를 겪게 될 것입니다. 상반기에는 기존에 추진하던 일들이 가속도를 내며 성과를 보이기 시작할 것이며, 하반기에는 새로운 인연이나 기회가 찾아와 인생의 전환점을 맞이할 가능성이 높습니다. 다만 급격한 기운의 변화로 인해 감정 기복이 생길 수 있으니, 중요한 결정은 반드시 차분한 상태에서 내리시길 권장하며 과감한 도전이 큰 결실로 이어지는 한 해가 될 것입니다.';
+    let general = `당신은 ${birthInfo.yearPillar}년 ${birthInfo.monthPillar}월 ${birthInfo.dayPillar}일 ${birthInfo.timePillar}(${hourLabel})에 태어난 ${gender === 'male' ? '남성' : '여성'}입니다. 태어난 시기인 ${season}에 ${me}의 기운이 중심이 되어, 기본적으로 ${me === '목' ? '성장과 창의성' : me === '화' ? '열정과 표현력' : me === '토' ? '신중함과 신뢰' : me === '금' ? '결단력과 명확함' : '유연함과 지혜'}을 나타냅니다. 현재 오행 분포는 ${elementDetail}로 나타나며, ${strengthMessage}`;
 
-    let wealth = '재물운의 관점에서 보면, 현재 ' + strongest + ' 기운이 강하게 작용하여 공격적인 투자보다는 실리를 챙기는 안정적인 자산 관리가 유리한 시기입니다. 2026년에는 특히 문서와 관련된 행운이 따르니 부동산 계약이나 장기적인 저축 계획을 세우기에 아주 적합합니다. 건강 면에서는 사주의 불균형으로 인해 ' + (me === '목' ? '간과 신경계' : me === '화' ? '심혈관 질환' : me === '토' ? '위장 및 소화기' : me === '금' ? '호흡기 및 대장' : '신장 및 방광') + ' 계통의 피로도가 높을 수 있습니다. 규칙적인 운동과 함께 ' + (counts['수'] < 1 ? '충분한 수분 섭취' : '차분한 명상') + '을 생활화하여 체내 기운을 조절하는 것이 재물운을 지키는 가장 중요한 기초가 될 것입니다.';
+    let fortune2026 = `2026년 병오년(丙午年)은 불의 기운이 강한 해입니다. 당신의 사주에서 ${strongest} 기운이 가장 두드러지게 나타나며, 이 기운이 병오년의 화(火) 에너지와 만나 ${strongest === '토' ? '안정적인 결과를 낳고' : strongest === '수' ? '감정과 지혜를 더욱 돋보이게' : strongest === '목' ? '새로운 기회를 가져오고' : strongest === '금' ? '명확한 목표를 세워주는' : '열정적으로 집중할 수 있는'} 흐름을 만듭니다. 태어난 달과 시간이 주는 고유한 리듬을 존중하며, 특히 ${hourLabel} 시간대에 추진한 일에서 좋은 기운이 따라올 것입니다.`;
+
+    let wealth = `재물과 건강 모두 현재 당신의 사주에서 가장 강한 ${strongest} 기운의 영향을 받습니다. ${me === '목' ? '지적인 계획과 공부, 교육 투자' : me === '화' ? '열정적인 프로젝트와 네트워킹' : me === '토' ? '안정적인 자산 관리와 계약' : me === '금' ? '조직적 재정 정리와 절약' : '휴식과 체력 관리'}이 도움이 됩니다. 특히 ${counts['수'] < 2 ? '수 기운이 약한 편이므로 충분한 수분 섭취와 심신 안정' : '수 기운이 적절히 함께하므로 차분한 결단'}을 생활화하는 것이 건강과 재물운을 균형 있게 지키는 열쇠입니다.`;
 
     const diff = (todayIdx - meIdx + 10) % 10;
     let dailyFortune = "";
