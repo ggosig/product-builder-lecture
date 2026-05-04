@@ -176,26 +176,62 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
 
 function generateInterpretations(dayMasterHanja, gender, birthInfo, todayDayGanHanja) {
     const wuxingNames = { '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수' };
+    const elementNames = { '목': '목(木)', '화': '화(火)', '토': '토(土)', '금': '금(金)', '수': '수(水)' };
     const ganIndex = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
     const meIdx = ganIndex.indexOf(dayMasterHanja);
     const todayIdx = ganIndex.indexOf(todayDayGanHanja);
-    const me = wuxingNames[dayMasterHanja];
+    const me = wuxingNames[dayMasterHanja] || '토';
     const counts = birthInfo.wuxingCounts || { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
     const strongest = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+    const weakest = Object.keys(counts).reduce((a, b) => counts[a] <= counts[b] ? a : b);
+    const deficiency = Object.entries(counts).filter(([, value]) => value === 0).map(([key]) => key);
+    const strongCount = counts[strongest];
+    const weakCount = counts[weakest];
     const total = Object.values(counts).reduce((sum, value) => sum + value, 0) || 1;
+    const balance = strongCount - weakCount;
 
     const seasonMap = { 1: '겨울', 2: '봄', 3: '여름', 4: '가을' };
     const seasonIndex = Math.floor(((birthInfo.month + 9) % 12) / 3) + 1;
     const season = seasonMap[seasonIndex] || '계절';
     const hourLabel = birthInfo.hour < 6 ? '이른 새벽' : birthInfo.hour < 12 ? '아침' : birthInfo.hour < 18 ? '오후' : '저녁';
-    const strengthMessage = counts[me] >= 3 ? '당신의 일간 기운이 원국에서 탄탄하게 받쳐주고 있습니다.' : '당신의 일간 기운이 다소 도전적인 상황이지만, 유연하게 접근할수록 호전됩니다.';
-    const elementDetail = Object.entries(counts).map(([key, value]) => `${key}${value}`).join(', ');
+    const dayBranch = birthInfo.dayPillar.charAt(1) || '';
+    const monthBranch = birthInfo.monthPillar.charAt(1) || '';
+    const yearBranch = birthInfo.yearPillar.charAt(1) || '';
+    const hourBranch = birthInfo.timePillar.charAt(1) || '';
 
-    let general = `당신은 ${birthInfo.yearPillar}년 ${birthInfo.monthPillar}월 ${birthInfo.dayPillar}일 ${birthInfo.timePillar}(${hourLabel})에 태어난 ${gender === 'male' ? '남성' : '여성'}입니다. 태어난 시기인 ${season}에 ${me}의 기운이 중심이 되어, 기본적으로 ${me === '목' ? '성장과 창의성' : me === '화' ? '열정과 표현력' : me === '토' ? '신중함과 신뢰' : me === '금' ? '결단력과 명확함' : '유연함과 지혜'}을 나타냅니다. 현재 오행 분포는 ${elementDetail}로 나타나며, ${strengthMessage}`;
+    const dayMasterDescription = {
+        '목': '성장과 확장, 유연한 사고를 대표합니다.',
+        '화': '열정과 표현, 밝은 에너지를 좋아합니다.',
+        '토': '신중함과 안정, 현실적인 판단력이 강합니다.',
+        '금': '결단력과 규율, 날카로운 통찰력을 지닙니다.',
+        '수': '지혜와 유연함, 깊은 감수성을 간직합니다.'
+    };
 
-    let fortune2026 = `2026년 병오년(丙午年)은 불의 기운이 강한 해입니다. 당신의 사주에서 ${strongest} 기운이 가장 두드러지게 나타나며, 이 기운이 병오년의 화(火) 에너지와 만나 ${strongest === '토' ? '안정적인 결과를 낳고' : strongest === '수' ? '감정과 지혜를 더욱 돋보이게' : strongest === '목' ? '새로운 기회를 가져오고' : strongest === '금' ? '명확한 목표를 세워주는' : '열정적으로 집중할 수 있는'} 흐름을 만듭니다. 태어난 달과 시간이 주는 고유한 리듬을 존중하며, 특히 ${hourLabel} 시간대에 추진한 일에서 좋은 기운이 따라올 것입니다.`;
+    const strongMessage = strongCount >= 3 ? '원국에서 이 기운이 확실히 지지되어 자신감과 추진력이 강하게 작용합니다.' : '이 기운이 다소 약한 편이지만 조화롭게 활용하면 충분히 안정감을 만들 수 있습니다.';
+    const weaknessMessage = deficiency.length > 0 ? `${deficiency.join(' , ')} 기운이 부족하여 해당 분야에서 부족함을 느낄 수 있습니다.` : '오행이 비교적 골고루 분포되어 있어 균형 잡힌 흐름을 만들기 좋습니다.';
 
-    let wealth = `재물과 건강 모두 현재 당신의 사주에서 가장 강한 ${strongest} 기운의 영향을 받습니다. ${me === '목' ? '지적인 계획과 공부, 교육 투자' : me === '화' ? '열정적인 프로젝트와 네트워킹' : me === '토' ? '안정적인 자산 관리와 계약' : me === '금' ? '조직적 재정 정리와 절약' : '휴식과 체력 관리'}이 도움이 됩니다. 특히 ${counts['수'] < 2 ? '수 기운이 약한 편이므로 충분한 수분 섭취와 심신 안정' : '수 기운이 적절히 함께하므로 차분한 결단'}을 생활화하는 것이 건강과 재물운을 균형 있게 지키는 열쇠입니다.`;
+    let general = `당신은 ${birthInfo.yearPillar}(${yearBranch})년 ${birthInfo.monthPillar}(${monthBranch})월 ${birthInfo.dayPillar}(${dayBranch})일 ${birthInfo.timePillar}(${hourLabel})에 태어난 ${gender === 'male' ? '남성' : '여성'}입니다. 일간은 ${dayMasterHanja}로 ${elementNames[me]}의 기운이 강하며, 이는 ${dayMasterDescription[me]} ${strongMessage}`;
+    general += ` 현재 오행 분포는 ${Object.entries(counts).map(([key, value]) => `${elementNames[key]} ${value}개`).join(', ')}로 나타납니다. ${weaknessMessage}`;
+
+    const year2026Effect = {
+        '목': '목생화(木生火) 관계로 2026년의 불 기운을 받으면 의욕과 창의력이 더욱 활발해집니다.',
+        '화': '화의 기운이 겹치는 해이므로 활력이 넘치고 표현력이 극대화되지만, 지나친 에너지 관리를 필요로 합니다.',
+        '토': '화생토(火生土)의 구조로 안정적인 결과를 얻을 수 있으나, 성급한 결정은 피하는 편이 좋습니다.',
+        '금': '불과 금의 관계는 제련의 과정이므로, 다소 갈등이 있으나 이를 통해 명확하고 단단한 성과를 만들 수 있습니다.',
+        '수': '불의 해와는 다소 반대되는 기운이나, 조절을 잘하면 감정과 지혜를 통해 새로운 기회를 창출할 수 있습니다.'
+    };
+
+    let fortune2026 = `2026년 병오년(丙午年)은 강한 화(火)의 해입니다. 당신의 사주에서 가장 강한 기운은 ${elementNames[strongest]}이며, 이것이 병오년의 기운과 만나 ${year2026Effect[me]}`;
+    if (balance >= 2) {
+        fortune2026 += ' 또한 오행이 한쪽으로 치우쳐 있어, 균형을 유지하는 노력이 중요합니다.';
+    } else {
+        fortune2026 += ' 오행의 균형이 비교적 양호하므로 변화의 기회를 안정적으로 수용할 수 있습니다.';
+    }
+
+    const deficiencyAdvice = deficiency.length > 0 ? `특히 ${deficiency.join(' , ')} 기운이 약하므로, 해당 기운을 보완하는 생활과 식습관이 도움이 됩니다.` : '오행 균형을 유지하는 생활 습관이 2026년의 흐름을 더 안정적으로 만들어줄 것입니다.';
+    let wealth = `재물운과 건강은 현재 사주에서 ${elementNames[strongest]} 기운의 영향을 가장 많이 받습니다. ${me === '목' ? '계획적인 공부와 정보 수집이 재물운을 도와줍니다.' : me === '화' ? '사람들과의 교류와 열정을 투자하는 활동이 재물과 건강에 긍정적입니다.' : me === '토' ? '안정적인 자산 관리와 규칙적인 생활이 재물운에 유리합니다.' : me === '금' ? '체계적인 정리와 절제된 소비가 도움이 됩니다.' : '휴식과 내부 에너지 관리를 잘하는 것이 중요합니다.'}`;
+    wealth += ` ${deficiencyAdvice}`;
+    wealth += ` 특히 ${weakest === '수' ? '수분 섭취와 마음의 안정' : weakest === '목' ? '창의적 활동과 생활의 활력' : weakest === '화' ? '열정과 표현력의 조절' : weakest === '금' ? '규칙성과 조직력' : '중용의 자세'}에 신경 쓰세요.`;
 
     const diff = (todayIdx - meIdx + 10) % 10;
     let dailyFortune = "";
