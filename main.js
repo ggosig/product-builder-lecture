@@ -80,7 +80,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         pillars.forEach(p => {
             const hanja = p.value;
             const korean = toKorean(hanja);
-            document.getElementById(p.id).innerHTML = `${hanja}<br><span style="font-size: 0.9rem; writing-mode: horizontal-tb; letter-spacing: 0; margin-top: 8px; display: block; color: var(--secondary-text); font-weight: normal;">(${korean})</span>`;
+            document.getElementById(p.id).innerHTML = hanja + '<br><span style="font-size: 0.9rem; writing-mode: horizontal-tb; letter-spacing: 0; margin-top: 8px; display: block; color: var(--secondary-text); font-weight: normal;">(' + korean + ')</span>';
         });
 
         // 2. 오행 분석 및 퍼센테이지 계산
@@ -114,8 +114,8 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
 
         elements.forEach(el => {
             const percent = Math.round((counts[el.key] / total) * 100);
-            document.getElementById(`bar-${el.id}`).style.width = percent + '%';
-            document.getElementById(`val-${el.id}`).textContent = percent + '%';
+            document.getElementById('bar-' + el.id).style.width = percent + '%';
+            document.getElementById('val-' + el.id).textContent = percent + '%';
         });
 
         // 3. 오늘의 운세 계산
@@ -126,7 +126,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
 
         // 4. 해석 및 궁합 생성
         const dayPillar = eightChar.getDay();
-        const dayMaster = dayPillar.charAt(0);
+        const dayMaster = dayPillar.charAt(0); // 일간 (Hanja)
         const interpretations = generateInterpretations(dayMaster, gender, counts, todayDayGan);
         
         document.getElementById('res-general').textContent = interpretations.general;
@@ -134,7 +134,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
         document.getElementById('res-wealth').textContent = interpretations.wealth;
 
         const now = new Date();
-        document.getElementById('today-date').textContent = `분석 일시: ${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 (${todayEightChar.getDay()}일)`;
+        document.getElementById('today-date').textContent = '분석 일시: ' + now.getFullYear() + '년 ' + (now.getMonth() + 1) + '월 ' + now.getDate() + '일 (' + todayEightChar.getDay() + '일)';
         document.getElementById('res-daily-fortune').textContent = interpretations.dailyFortune;
         document.getElementById('res-daily-advice').innerText = interpretations.dailyAdvice;
 
@@ -149,7 +149,7 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
             div.style.backgroundColor = 'var(--container-bg)';
             div.style.borderRadius = '10px';
             div.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
-            div.innerHTML = `<strong style="color: var(--accent-color); font-size: 1.15rem; display: block; margin-bottom: 10px;">${match.title}</strong><p style="font-size: 0.95rem; line-height: 1.7;">${match.reason}</p>`;
+            div.innerHTML = '<strong style="color: var(--accent-color); font-size: 1.15rem; display: block; margin-bottom: 10px;">' + match.title + '</strong><p style="font-size: 0.95rem; line-height: 1.7;">' + match.reason + '</p>';
             compatibilityList.appendChild(div);
         });
 
@@ -162,30 +162,40 @@ document.getElementById('analyze-btn').addEventListener('click', () => {
     }
 });
 
-function generateInterpretations(dayMaster, gender, counts, todayDayGan) {
+function generateInterpretations(dayMasterHanja, gender, counts, todayDayGanHanja) {
     const wuxingNames = { '甲': '목', '乙': '목', '丙': '화', '丁': '화', '戊': '토', '己': '토', '庚': '금', '辛': '금', '壬': '수', '癸': '수' };
-    const me = wuxingNames[dayMaster] || dayMaster;
-    const strongest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    const ganIndex = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const meIdx = ganIndex.indexOf(dayMasterHanja);
+    const todayIdx = ganIndex.indexOf(todayDayGanHanja);
     
-    let general = `당신은 만물의 생명력을 상징하는 ${me}의 기운을 타고난 ${gender === 'male' ? '남성' : '여성'}입니다. 명리학적으로 ${me}은 ${me === '목' ? '성장과 인자함' : me === '화' ? '열정과 예절' : me === '토' ? '신용과 중용' : me === '금' ? '의리와 결단' : '지혜와 유연함'}을 의미하며, 이는 당신의 삶 전반에 걸쳐 강력한 신념으로 작용합니다. 특히 현재 사주에서는 ${strongest}의 에너지가 매우 강하게 자리 잡고 있어, 남들보다 뛰어난 추진력과 리더십을 발휘할 수 있는 잠재력을 가졌습니다. 다만 강한 기운이 때로는 독단적인 고집으로 비춰질 수 있으니 타인의 의견을 수렴하는 포용력을 기른다면 더욱 완벽한 운의 흐름을 탈 수 있습니다.`;
+    const me = wuxingNames[dayMasterHanja];
+    const strongest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
 
-    let fortune2026 = `2026년 병오년(丙午年)은 천간의 뜨거운 태양과 지지의 활활 타오르는 불이 만나는 역동적인 '붉은 말'의 해입니다. 당신의 ${me} 기운이 이 강력한 화(火)의 에너지를 만났을 때, 삶의 무대가 확장되는 커다란 변화를 겪게 될 것입니다. 상반기에는 기존에 추진하던 일들이 가속도를 내며 성과를 보이기 시작할 것이며, 하반기에는 새로운 인연이나 기회가 찾아와 인생의 전환점을 맞이할 가능성이 높습니다. 다만 급격한 기운의 변화로 인해 감정 기복이 생길 수 있으니, 중요한 결정은 반드시 차분한 상태에서 내리시길 권장하며 과감한 도전이 큰 결실로 이어지는 한 해가 될 것입니다.`;
+    let general = '당신은 만물의 생명력을 상징하는 ' + me + '의 기운을 타고난 ' + (gender === 'male' ? '남성' : '여성') + '입니다. 명리학적으로 ' + me + '은 ' + (me === '목' ? '성장과 인자함' : me === '화' ? '열정과 예절' : me === '토' ? '신용과 중용' : me === '금' ? '의리와 결단' : '지혜와 유연함') + '을 의미하며, 이는 당신의 삶 전반에 걸쳐 강력한 신념으로 작용합니다. 특히 현재 사주에서는 ' + strongest + '의 에너지가 매우 강하게 자리 잡고 있어, 남들보다 뛰어난 추진력과 리더십을 발휘할 수 있는 잠재력을 가졌습니다. 다만 강한 기운이 때로는 독단적인 고집으로 비춰질 수 있으니 타인의 의견을 수렴하는 포용력을 기른다면 더욱 완벽한 운의 흐름을 탈 수 있습니다.';
 
-    let wealth = `재물운의 관점에서 보면, 현재 ${strongest} 기운이 강하게 작용하여 공격적인 투자보다는 실리를 챙기는 안정적인 자산 관리가 유리한 시기입니다. 2026년에는 특히 문서와 관련된 행운이 따르니 부동산 계약이나 장기적인 저축 계획을 세우기에 아주 적합합니다. 건강 면에서는 사주의 불균형으로 인해 ${me === '목' ? '간과 신경계' : me === '화' ? '심혈관 질환' : me === '토' ? '위장 및 소화기' : me === '금' ? '호흡기 및 대장' : '신장 및 방광'} 계통의 피로도가 높을 수 있습니다. 규칙적인 운동과 함께 ${counts['수'] < 1 ? '충분한 수분 섭취' : '차분한 명상'}을 생활화하여 체내 기운을 조절하는 것이 재물운을 지키는 가장 중요한 기초가 될 것입니다.`;
+    let fortune2026 = '2026년 병오년(丙午年)은 천간의 뜨거운 태양과 지지의 활활 타오르는 불이 만나는 역동적인 "붉은 말"의 해입니다. 당신의 ' + me + ' 기운이 이 강력한 화(火)의 에너지를 만났을 때, 삶의 무대가 확장되는 커다란 변화를 겪게 될 것입니다. 상반기에는 기존에 추진하던 일들이 가속도를 내며 성과를 보이기 시작할 것이며, 하반기에는 새로운 인연이나 기회가 찾아와 인생의 전환점을 맞이할 가능성이 높습니다. 다만 급격한 기운의 변화로 인해 감정 기복이 생길 수 있으니, 중요한 결정은 반드시 차분한 상태에서 내리시길 권장하며 과감한 도전이 큰 결실로 이어지는 한 해가 될 것입니다.';
 
-    const todayMe = wuxingNames[todayDayGan] || todayDayGan;
+    let wealth = '재물운의 관점에서 보면, 현재 ' + strongest + ' 기운이 강하게 작용하여 공격적인 투자보다는 실리를 챙기는 안정적인 자산 관리가 유리한 시기입니다. 2026년에는 특히 문서와 관련된 행운이 따르니 부동산 계약이나 장기적인 저축 계획을 세우기에 아주 적합합니다. 건강 면에서는 사주의 불균형으로 인해 ' + (me === '목' ? '간과 신경계' : me === '화' ? '심혈관 질환' : me === '토' ? '위장 및 소화기' : me === '금' ? '호흡기 및 대장' : '신장 및 방광') + ' 계통의 피로도가 높을 수 있습니다. 규칙적인 운동과 함께 ' + (counts['수'] < 1 ? '충분한 수분 섭취' : '차분한 명상') + '을 생활화하여 체내 기운을 조절하는 것이 재물운을 지키는 가장 중요한 기초가 될 것입니다.';
+
+    const diff = (todayIdx - meIdx + 10) % 10;
     let dailyFortune = "";
     let dailyAdvice = "";
 
-    if (me === todayMe) {
-        dailyFortune = "나와 같은 기운이 강하게 들어와 주체성이 확립되는 날입니다.";
-        dailyAdvice = "오늘의 행동 지침:\n\n1. 본인의 아이디어를 가감 없이 제안해 보세요.\n2. 타인과의 협상에서 주도권을 잡기 좋은 시점입니다.\n3. 다만, 지나친 자신감이 독단으로 비치지 않게 주의하세요.\n4. 저녁 시간에는 혼자만의 시간을 가지며 에너지를 정리하십시오.\n\n이러한 행동들은 오늘 당신의 내면적 힘을 실질적인 성과로 바꾸어 줄 것입니다.";
-    } else if ( (me === '목' && todayMe === '수') || (me === '화' && todayMe === '목') || (me === '토' && todayMe === '화') || (me === '금' && todayMe === '토') || (me === '수' && todayMe === '금') ) {
-        dailyFortune = "나를 지지하고 도와주는 귀인의 기운이 가득한 길일입니다.";
-        dailyAdvice = "오늘의 행동 지침:\n\n1. 평소 어려웠던 부탁이 있다면 오늘 시도해 보세요.\n2. 윗사람이나 전문가의 조언을 적극적으로 구하십시오.\n3. 감사의 표시를 작은 선물이나 메시지로 전해 보세요.\n4. 새로운 배움을 시작하거나 책을 읽기에 아주 좋습니다.\n\n주변의 긍정적인 에너지가 당신의 문제를 해결하는 열쇠가 되어줄 것입니다.";
+    if (diff === 0 || diff === 1) {
+        dailyFortune = "나와 대등한 기운이 들어오는 '비겁'의 날입니다. 주체성이 강해지고 동료와의 협력이 중요해집니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 동료나 친구와 점심 식사를 하며 유대감을 강화하세요.\n2. 본인의 전문성을 발휘할 수 있는 제안을 당당히 하십시오.\n3. 다만 지나친 경쟁심은 불필요한 마찰을 부르니 주의하세요.\n4. 운동을 통해 넘치는 에너지를 건강하게 발산해 보세요.\n\n오늘은 자신의 영역을 확고히 다지면서도 주변과 조화를 이루는 지혜가 필요한 날입니다.";
+    } else if (diff === 2 || diff === 3) {
+        dailyFortune = "나의 재능과 에너지를 밖으로 표출하는 '식상'의 날입니다. 창의력이 번뜩이고 표현력이 좋아집니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 새로운 기획안을 작성하거나 아이디어 회의에 참여하세요.\n2. 평소 하고 싶었던 말을 논리적이고 부드럽게 전달해 보세요.\n3. 예술적인 활동이나 취미 생활에 몰입하기에 최적인 날입니다.\n4. 구설수를 피하기 위해 말하기 전 한 번 더 생각하십시오.\n\n당신의 말과 행동이 타인에게 영감을 주고 실질적인 변화를 이끌어내는 역동적인 하루가 될 것입니다.";
+    } else if (diff === 4 || diff === 5) {
+        dailyFortune = "현실적인 성과와 결실을 맺는 '재성'의 날입니다. 경제적 감각이 예리해지고 목표 달성 운이 따릅니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 미뤄왔던 재정 계획을 점검하거나 가계부를 정리해 보세요.\n2. 업무에서 구체적인 수치와 결과물을 내는 데 집중하십시오.\n3. 쇼핑을 한다면 꼭 필요한 물건인지 신중히 판단 후 구매하세요.\n4. 결과 중심적인 태도로 주변 사람을 몰아세우지 않게 유의하세요.\n\n노력에 대한 보상이 확실히 따라오는 날이니, 성실함으로 기회를 완벽히 당신의 것으로 만드십시오.";
+    } else if (diff === 6 || diff === 7) {
+        dailyFortune = "사회적 책임과 명예를 중시하게 되는 '관성'의 날입니다. 조직 내에서 인정을 받거나 규율을 따를 일이 생깁니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 시간 약속을 철저히 지키고 단정한 차림으로 신뢰를 주십시오.\n2. 공적인 업무 처리에 있어 원칙을 준수하며 정직하게 행동하세요.\n3. 스트레스가 쌓일 수 있으니 퇴근 후에는 미온수로 목욕하세요.\n4. 지나친 자기검열로 위축되지 말고 할 일에만 집중하십시오.\n\n절제된 행동이 당신의 품격을 높여주며, 윗사람으로부터 좋은 평가를 이끌어내는 보람찬 하루가 될 것입니다.";
     } else {
-        dailyFortune = "변화의 기운이 감지되어 신중한 판단이 요구되는 날입니다.";
-        dailyAdvice = "오늘의 행동 지침:\n\n1. 중요한 계약이나 투자는 하루 정도 미루는 것이 좋습니다.\n2. 일상의 작은 루틴을 지키며 마음의 평온을 유지하세요.\n3. 주변의 사소한 시비에 휘말리지 않도록 언행을 삼가하십시오.\n4. 퇴근 후 집 안을 정리하며 나쁜 기운을 밖으로 내보내세요.\n\n차분하게 자신을 돌아보는 시간이 내일의 더 큰 행운을 불러오는 밑거름이 됩니다.";
+        dailyFortune = "나를 채워주고 보호해 주는 '인성'의 날입니다. 공부, 계약, 건강 회복에 아주 유리한 기운입니다.";
+        dailyAdvice = "오늘의 행동 지침:\n\n1. 전문 서적을 읽거나 강의를 들으며 지적 성장을 도모하세요.\n2. 중요한 문서 계약이나 승인이 있다면 오늘 처리하기 좋습니다.\n3. 어머니나 스승님 등 당신을 아끼는 분께 안부 인사를 전하세요.\n4. 충분한 휴식과 영양 섭취로 몸의 에너지를 충전하십시오.\n\n내면을 채우는 활동들이 당신의 미래를 지탱하는 든든한 뿌리가 되어주는 평온하고 길한 날입니다.";
     }
 
     const matches = {
@@ -235,36 +245,10 @@ const modal = document.getElementById('policy-modal');
 const modalBody = document.getElementById('modal-body');
 
 const policies = {
-    privacy: `
-        <h2>개인정보처리방침</h2>
-        <p>명리연구소는 사용자의 개인정보 보호를 최우선으로 하며, 관련 법령을 준수합니다.</p>
-        <ul>
-            <li><strong>개인정보 수집 및 이용:</strong> 본 사이트는 사용자의 생년월일, 성별, 태어난 시간 데이터를 사주 분석 및 결과 도출을 위해 일시적으로 사용합니다.</li>
-            <li><strong>데이터 저장:</strong> 입력된 모든 정보는 서버에 저장되지 않으며, 브라우저 세션이 종료되면 즉시 소멸됩니다.</li>
-            <li><strong>타사 쿠키 및 광고:</strong> 본 사이트는 Google AdSense 광고를 게재하며, Google은 사용자의 방문 기록을 바탕으로 맞춤형 광고를 제공하기 위해 쿠키를 사용합니다. 사용자는 Google 광고 설정에서 맞춤형 광고를 거부할 수 있습니다.</li>
-            <li><strong>문의:</strong> 개인정보와 관련된 문의는 support@myeongri-lab.example.com으로 연락 바랍니다.</li>
-        </ul>
-    `,
-    terms: `
-        <h2>서비스 이용약관</h2>
-        <p>명리연구소(이하 "연구소")가 제공하는 모든 서비스 이용에 관한 사항을 규정합니다.</p>
-        <ul>
-            <li>사용자는 본 서비스를 개인적, 비상업적 용도로만 이용할 수 있습니다.</li>
-            <li>분석 결과는 명리학적 데이터에 기반한 추정치이며, 실제 결과와 다를 수 있습니다.</li>
-            <li>사용자의 오입력으로 인한 결과에 대해 연구소는 책임을 지지 않습니다.</li>
-        </ul>
-    `,
-    disclaimer: `
-        <h2>책임부인 및 법적 고지</h2>
-        <p>명리연구소의 사주 분석 서비스는 과학적으로 검증된 것이 아니며, 동양 철학인 명리학의 이론적 해석을 제공하는 것입니다.</p>
-        <p>제공되는 정보는 어떠한 법적, 재무적, 의학적 효력도 없으며, 중대한 결정의 근거로 사용되어서는 안 됩니다. 본 정보를 바탕으로 행한 모든 행동에 대한 책임은 사용자 본인에게 있습니다.</p>
-    `,
-    contact: `
-        <h2>고객 지원 및 문의</h2>
-        <p>서비스 이용 중 불편한 점이나 광고 관련 제휴 문의는 아래 채널을 이용해 주세요.</p>
-        <p><strong>Email:</strong> support@myeongri-lab.example.com</p>
-        <p><strong>운영 시간:</strong> 평일 10:00 - 17:00</p>
-    `
+    privacy: '<h2>개인정보처리방침</h2><p>명리연구소는 사용자의 개인정보 보호를 최우선으로 하며, 관련 법령을 준수합니다.</p><ul><li><strong>개인정보 수집 및 이용:</strong> 본 사이트는 사용자의 생년월일, 성별, 태어난 시간 데이터를 사주 분석 및 결과 도출을 위해 일시적으로 사용합니다.</li><li><strong>데이터 저장:</strong> 입력된 모든 정보는 서버에 저장되지 않으며, 브라우저 세션이 종료되면 즉시 소멸됩니다.</li><li><strong>타사 쿠키 및 광고:</strong> 본 사이트는 Google AdSense 광고를 게재하며, Google은 사용자의 방문 기록을 바탕으로 맞춤형 광고를 제공하기 위해 쿠키를 사용합니다. 사용자는 Google 광고 설정에서 맞춤형 광고를 거부할 수 있습니다.</li><li><strong>문의:</strong> 개인정보와 관련된 문의는 support@myeongri-lab.example.com으로 연락 바랍니다.</li></ul>',
+    terms: '<h2>서비스 이용약관</h2><p>명리연구소(이하 "연구소")가 제공하는 모든 서비스 이용에 관한 사항을 규정합니다.</p><ul><li>사용자는 본 서비스를 개인적, 비상업적 용도로만 이용할 수 있습니다.</li><li>분석 결과는 명리학적 데이터에 기반한 추정치이며, 실제 결과와 다를 수 있습니다.</li><li>사용자의 오입력으로 인한 결과에 대해 연구소는 책임을 지지 않습니다.</li></ul>',
+    disclaimer: '<h2>책임부인 및 법적 고지</h2><p>명리연구소의 사주 분석 서비스는 과학적으로 검증된 것이 아니며, 동양 철학인 명리학의 이론적 해석을 제공하는 것입니다.</p><p>제공되는 정보는 어떠한 법적, 재무적, 의학적 효력도 없으며, 중대한 결정의 근거로 사용되어서는 안 됩니다. 본 정보를 바탕으로 행한 모든 행동에 대한 책임은 사용자 본인에게 있습니다.</p>',
+    contact: '<h2>고객 지원 및 문의</h2><p>서비스 이용 중 불편한 점이나 광고 관련 제휴 문의는 아래 채널을 이용해 주세요.</p><p><strong>Email:</strong> support@myeongri-lab.example.com</p><p><strong>운영 시간:</strong> 평일 10:00 - 17:00</p>'
 };
 
 function showModal(type) {
