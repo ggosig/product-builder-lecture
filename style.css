@@ -178,9 +178,10 @@ h1 { font-size: 3rem; color: var(--accent-color); margin-bottom: 10px; }
 .hidden { display: none !important; }
 
 @media (max-width: 768px) {
-    .wuxing-flex { flex-direction: column; align-items: stretch; }
-    .wuxing-diagram, .wuxing-bars { max-width: none; }
-    .wuxing-bar-item { grid-template-columns: 1fr 1fr auto; }
+    .wuxing-flex { flex-direction: column; align-items: center; }
+    .wuxing-diagram { max-width: 250px; margin: 0 auto; }
+    .wuxing-bars { max-width: 100%; width: 100%; }
+    .wuxing-bar-item { grid-template-columns: 60px 1fr 60px; }
     .saju-table { flex-wrap: wrap; justify-content: center; }
     .saju-column { width: calc(50% - 10px); max-width: 140px; margin-bottom: 15px; }
     .site-nav { display: none; } /* Mobile nav simplify for now */
